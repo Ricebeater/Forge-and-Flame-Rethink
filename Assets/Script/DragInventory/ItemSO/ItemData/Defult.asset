@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 916ee2c9ff2c08c42b1b673f75672217, type: 3}
+  m_Name: Defult
+  m_EditorClassIdentifier: Assembly-CSharp::ItemData
+  itemName: Defult
+  itemType: 0
+  _width: 1
+  _height: 1
+  itemPrefab: {fileID: 3657414016838470206, guid: 9044849a3825fd44d94dc503764c2fbe, type: 3}
+  icon: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
