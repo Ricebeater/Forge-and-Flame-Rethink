@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
 using TMPro;
-using System.Collections;
+using UnityEngine;
 using UnityEngine.AI;
 
 public class SpawnManager : MonoBehaviour
@@ -8,6 +9,12 @@ public class SpawnManager : MonoBehaviour
     [Header("Global Settings")]
     public Transform player;
     public TMP_Text timerText;
+
+    [Header("Audio Settings")]
+    public AudioClip ambientMusic;
+    [Range(0f, 1f)] public float ambientVolume = 0.5f;
+    public AudioClip bossMusic;
+    [Range(0f, 1f)] public float bossVolume = 0.8f;
 
     [Header("Boss Settings")]
     public float timeUntilBoss = 60f;
@@ -26,6 +33,21 @@ public class SpawnManager : MonoBehaviour
         {
             GameObject p = GameObject.FindGameObjectWithTag("Player");
             if (p != null) player = p.transform;
+        }
+
+        if (SoundManager.Instance != null && ambientMusic != null)
+        {
+            SoundManager.Instance.PlayMusic(ambientMusic, ambientVolume);
+        }
+
+        StartGameAutomatically();
+    }
+
+    void StartGameAutomatically()
+    {
+        foreach (var spawner in allSpawnersInScene)
+        {
+            spawner.BeginSpawning();
         }
     }
 
@@ -50,6 +72,7 @@ public class SpawnManager : MonoBehaviour
             int minutes = Mathf.FloorToInt(Mathf.Max(timeUntilBoss, 0) / 60F);
             int seconds = Mathf.FloorToInt(Mathf.Max(timeUntilBoss, 0) % 60F);
             timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+            timerText.color = Color.white;
         }
     }
 
@@ -69,6 +92,11 @@ public class SpawnManager : MonoBehaviour
 
     IEnumerator BossSpawnSequence()
     {
+        if (SoundManager.Instance != null && bossMusic != null)
+        {
+            SoundManager.Instance.PlayMusicWithFade(bossMusic, bossVolume);
+        }
+
         float delayTimer = bossSpawnDelay;
         while (delayTimer > 0)
         {
@@ -102,6 +130,7 @@ public class SpawnManager : MonoBehaviour
         if (NavMesh.SamplePosition(spawnPos, out hit, 10.0f, NavMesh.AllAreas))
         {
             Instantiate(finalBossPrefab, hit.position, Quaternion.identity);
+            Debug.Log("Final Boss Spawned!");
         }
     }
 }

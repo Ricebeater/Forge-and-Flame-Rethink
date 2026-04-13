@@ -15,7 +15,14 @@ public class AttackState : EnemyBaseState
     {
         if (ai.enemy.player == null) return;
 
-        ai.transform.LookAt(ai.enemy.player);
+
+        Vector3 targetPosition = new Vector3(
+            ai.enemy.player.position.x,
+            ai.transform.position.y,
+            ai.enemy.player.position.z
+        );
+
+        ai.transform.LookAt(targetPosition);
 
         if (Vector3.Distance(ai.transform.position, ai.enemy.player.position) > ai.enemy.attackRange)
         {

@@ -10,6 +10,7 @@ public class BossEnemy : Enemy
     public float bossChargeTime = 2f;
     public float bossAttackRadius = 3f;
     public float bossSkillCooldown = 5f;
+    public LayerMask targetLayer;
 
     [HideInInspector] public float lastBossSkillTime = -999f;
 

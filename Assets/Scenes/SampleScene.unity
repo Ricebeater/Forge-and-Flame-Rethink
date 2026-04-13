@@ -2948,6 +2948,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1590902749}
   - component: {fileID: 1590902748}
+  - component: {fileID: 1590902750}
   m_Layer: 0
   m_Name: SpawningPos Test
   m_TagString: Untagged
@@ -2969,10 +2970,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AreaSpawner
   enemyPrefab: {fileID: 3252229227927214002, guid: 9e9d11abb27fd984aafc9cf12da8e8ae, type: 3}
   maxEnemies: 5
+  initialDelay: 1
   spawnInterval: 3
   isActive: 1
   spawnCenter: {fileID: 1590902749}
-  areaRadius: 5
+  areaRadius: 10
 --- !u!4 &1590902749
 Transform:
   m_ObjectHideFlags: 0
@@ -2981,13 +2983,32 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1590902747}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1829908146}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1590902750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1590902747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 605e753d4ef916e47988c15acacfecc1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AreaSpawner
+  enemyPrefab: {fileID: 5738472655128574116, guid: 45128c75c4150a44d96bd51a8086c808, type: 3}
+  maxEnemies: 5
+  initialDelay: 1
+  spawnInterval: 3
+  isActive: 1
+  spawnCenter: {fileID: 1590902749}
+  areaRadius: 10
 --- !u!1 &1599211189
 GameObject:
   m_ObjectHideFlags: 0
@@ -4181,7 +4202,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1590902749}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1829908147
@@ -4198,7 +4220,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AroundSpawner
   enemyPrefab: {fileID: 5738472655128574116, guid: 7100c06bbd8e440428c489b0c3b25104, type: 3}
   maxEnemies: 5
-  spawnInterval: 3
+  initialDelay: 1
+  spawnInterval: 0.5
   isActive: 1
   target: {fileID: 1049878860}
   spawnRadius: 5
@@ -4217,6 +4240,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpawnManager
   player: {fileID: 1049878860}
   timerText: {fileID: 1788538352}
+  ambientMusic: {fileID: 8300000, guid: 47d3b080ed9c2a94088d4fa972eded07, type: 3}
+  ambientVolume: 0.5
+  bossMusic: {fileID: 8300000, guid: 2c590ec9df1c0f74b92d3f22fa635e7d, type: 3}
+  bossVolume: 0.8
   timeUntilBoss: 60
   finalBossPrefab: {fileID: 3252229227927214002, guid: b1209d456e7459f4bbb975c65143f011, type: 3}
   bossSpawnDelay: 5
@@ -4810,4 +4837,3 @@ SceneRoots:
   - {fileID: 1049878860}
   - {fileID: 795034472}
   - {fileID: 1556893631}
-  - {fileID: 1590902749}

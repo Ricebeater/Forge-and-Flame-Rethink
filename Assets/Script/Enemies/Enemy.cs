@@ -15,7 +15,6 @@ public class Enemy : Character
 {
     [Header("Shared Components")]
     public Transform player;
-    public LayerMask targetLayer;
     public LayerMask groundLayer;
     [HideInInspector] public NavMeshAgent agent;
 

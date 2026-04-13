@@ -219,7 +219,6 @@ GameObject:
   - component: {fileID: 1618025624351369152}
   - component: {fileID: 5848706055731175481}
   - component: {fileID: 5351595542857129509}
-  - component: {fileID: 4050478310434744108}
   - component: {fileID: -5633187252564797076}
   - component: {fileID: 4068475850984679157}
   m_Layer: 0
@@ -318,19 +317,6 @@ NavMeshAgent:
   m_BaseOffset: 0.06
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &4050478310434744108
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3252229227927214002}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d1c9a347a323da4583d5212b9c22a3e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BillboardCam
-  mainCamera: {fileID: 0}
 --- !u!114 &-5633187252564797076
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -364,9 +350,6 @@ MonoBehaviour:
   flashCount: 0
   deadEffect: {fileID: 8245046640809465532, guid: dbb63399389ba6d41865e7007736fca3, type: 3}
   player: {fileID: 0}
-  targetLayer:
-    serializedVersion: 2
-    m_Bits: 0
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -409,6 +392,9 @@ MonoBehaviour:
   bossChargeTime: 2
   bossAttackRadius: 3
   bossSkillCooldown: 5
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 128
   lastBossSkillTime: -999
 --- !u!1 &3429986288919598872
 GameObject:
@@ -494,6 +480,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2726001495831810826}
+  - component: {fileID: 1360052114259598983}
   m_Layer: 0
   m_Name: Visual
   m_TagString: Untagged
@@ -518,6 +505,19 @@ Transform:
   - {fileID: 6248673941891485757}
   m_Father: {fileID: 2854368322118517126}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1360052114259598983
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6861330915718572317}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d1c9a347a323da4583d5212b9c22a3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BillboardCam
+  mainCamera: {fileID: 0}
 --- !u!1 &6975651575170278736
 GameObject:
   m_ObjectHideFlags: 0

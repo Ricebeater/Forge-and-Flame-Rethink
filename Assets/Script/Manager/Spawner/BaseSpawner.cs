@@ -8,18 +8,35 @@ public abstract class BaseSpawner : MonoBehaviour
     [Header("Base Spawner Settings")]
     public GameObject enemyPrefab;
     public int maxEnemies = 5;
-    public float spawnInterval = 3f;
+
+    [Tooltip("The delay before first spawn")]
+    public float initialDelay = 1f;
+
+    [Tooltip("The dealy between each")]
+    public float spawnInterval = 0.5f;
+
     public bool isActive = true;
 
     protected List<GameObject> currentEnemies = new List<GameObject>();
 
     protected virtual void Start()
     {
+
+    }
+
+    public virtual void BeginSpawning()
+    {
+        isActive = true;
         StartCoroutine(SpawnRoutine());
     }
 
     IEnumerator SpawnRoutine()
     {
+        if (initialDelay > 0)
+        {
+            yield return new WaitForSeconds(initialDelay);
+        }
+
         while (true)
         {
             if (isActive)
