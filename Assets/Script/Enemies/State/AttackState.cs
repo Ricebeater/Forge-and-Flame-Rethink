@@ -38,32 +38,9 @@ public class AttackState : EnemyBaseState
 
     void PerformAttack(EnemyAI ai)
     {
-        ai.enemy.PlayAttackAnimation();
-        if (ai.enemy.isRanged)
-        {
-            if (ai.enemy.projectilePrefab != null && ai.enemy.firePoint != null)
-            {
-                Vector3 targetPos;
-                Collider playerCol = ai.enemy.player.GetComponent<Collider>();
-                if (playerCol != null) targetPos = playerCol.bounds.center;
-                else targetPos = ai.enemy.player.position + Vector3.up;
+        ai.enemy.PerformAttack();
 
-                Vector3 dirToPlayer = (targetPos - ai.enemy.firePoint.position).normalized;
-
-                GameObject bulletObj = GameObject.Instantiate(
-                    ai.enemy.projectilePrefab,
-                    ai.enemy.firePoint.position,
-                    Quaternion.LookRotation(dirToPlayer)
-                );
-
-                EnemyProjectile projectile = bulletObj.GetComponent<EnemyProjectile>();
-                if (projectile != null)
-                {
-                    projectile.Setup(dirToPlayer, ai.enemy.damage, ai.enemy.projectileSpeed);
-                }
-            }
-        }
-        else
+        if (!(ai.enemy is RangedEnemy))
         {
             Character targetChar = ai.enemy.player.GetComponent<Character>();
             if (targetChar != null)

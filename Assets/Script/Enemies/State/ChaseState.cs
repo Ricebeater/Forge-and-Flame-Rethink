@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ChaseState : EnemyBaseState
 {
@@ -17,20 +17,23 @@ public class ChaseState : EnemyBaseState
 
         float distance = Vector3.Distance(ai.transform.position, ai.enemy.player.position);
 
-        if (!ai.enemy.isBoss && distance > ai.enemy.chaseRange)
+        if (!(ai.enemy is BossEnemy) && distance > ai.enemy.chaseRange)
         {
             ai.ChangeState(ai.patrolState);
         }
+
         float stopDistance = ai.enemy.attackRange;
-        if (ai.enemy.isRanged)
+
+        if (ai.enemy is RangedEnemy)
         {
             stopDistance = ai.enemy.attackRange * 0.8f;
         }
+
         if (distance <= stopDistance)
         {
-            if (ai.enemy.isBoss)
+            if (ai.enemy is BossEnemy boss)
             {
-                if (Time.time >= ai.enemy.lastBossSkillTime + ai.enemy.bossSkillCooldown)
+                if (Time.time >= boss.lastBossSkillTime + boss.bossSkillCooldown)
                 {
                     ai.ChangeState(ai.bossAttackState);
                 }
@@ -46,8 +49,8 @@ public class ChaseState : EnemyBaseState
         }
     }
 
-    public override void ExitState(EnemyAI ai) 
-    { 
+    public override void ExitState(EnemyAI ai)
+    {
 
     }
 }

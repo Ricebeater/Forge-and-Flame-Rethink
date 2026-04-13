@@ -41,7 +41,7 @@ public class EnemyAI : MonoBehaviour
             enemy.agent = GetComponent<NavMeshAgent>();
         }
 
-        if (enemy.isBoss)
+        if (enemy is BossEnemy)
         {
             ChangeState(chaseState);
         }
@@ -83,7 +83,7 @@ public class EnemyAI : MonoBehaviour
     }
     public void StartFleeing()
     {
-        if (enemy.isBoss)
+        if (enemy is BossEnemy)
         {
             Destroy(gameObject);
             return;

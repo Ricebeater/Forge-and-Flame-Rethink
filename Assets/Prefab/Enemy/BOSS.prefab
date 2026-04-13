@@ -219,9 +219,9 @@ GameObject:
   - component: {fileID: 1618025624351369152}
   - component: {fileID: 5848706055731175481}
   - component: {fileID: 5351595542857129509}
-  - component: {fileID: 6198229222619718642}
-  - component: {fileID: 388553741937421358}
-  - component: {fileID: 3018647705105797778}
+  - component: {fileID: 4050478310434744108}
+  - component: {fileID: -5633187252564797076}
+  - component: {fileID: 4068475850984679157}
   m_Layer: 0
   m_Name: BOSS
   m_TagString: Enemy
@@ -292,7 +292,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
@@ -318,7 +318,20 @@ NavMeshAgent:
   m_BaseOffset: 0.06
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &6198229222619718642
+--- !u!114 &4050478310434744108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3252229227927214002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d1c9a347a323da4583d5212b9c22a3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BillboardCam
+  mainCamera: {fileID: 0}
+--- !u!114 &-5633187252564797076
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -330,8 +343,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 734c96a5a99687f44a8aebe0bf9ee55d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAI
-  enemy: {fileID: 0}
---- !u!114 &388553741937421358
+  enemy: {fileID: 4068475850984679157}
+--- !u!114 &4068475850984679157
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -340,37 +353,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 3252229227927214002}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d1c9a347a323da4583d5212b9c22a3e, type: 3}
+  m_Script: {fileID: 11500000, guid: 3584640dc4bd6f844b469a704043ced2, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
-  mainCamera: {fileID: 0}
---- !u!114 &3018647705105797778
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3252229227927214002}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c7532ce059b7a84198475976f8ab47a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Enemy
+  m_EditorClassIdentifier: Assembly-CSharp::BossEnemy
   entityName: 
-  maxHP: 2000
+  maxHP: 100
   currentHP: 0
-  damage: 5
-  flashDuration: 0.4
-  flashCount: 2
-  deadEffect: {fileID: 2998324411461506229, guid: f0ef95c260c316d468f33f07fffb80b0, type: 3}
+  damage: 10
+  flashDuration: 0
+  flashCount: 0
+  deadEffect: {fileID: 8245046640809465532, guid: dbb63399389ba6d41865e7007736fca3, type: 3}
   player: {fileID: 0}
   targetLayer:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 0
   groundLayer:
     serializedVersion: 2
-    m_Bits: 128
-  agent: {fileID: 5351595542857129509}
+    m_Bits: 64
+  agent: {fileID: 0}
   attackSounds:
     clips:
     - {fileID: 8300000, guid: d62e992b196fb1d4087d41ad9798b379, type: 3}
@@ -378,11 +378,12 @@ MonoBehaviour:
   hurtSound:
     clips:
     - {fileID: 8300000, guid: 1a7f96dcf219e1048b110459aebfc797, type: 3}
-    volume: 0.5
+    - {fileID: 8300000, guid: a3c4aa68956aff14a985d9fe9ff19c8b, type: 3}
+    volume: 1
   dieSound:
     clips:
     - {fileID: 8300000, guid: 9b29ee58c82af56438a869cd10897aa4, type: 3}
-    volume: 0.5
+    volume: 1
   walkBobSpeed: 10
   walkBobAmount: 0.1
   walkSwayAmount: 5
@@ -392,13 +393,9 @@ MonoBehaviour:
   maxWaitTime: 3
   patrolSpeed: 2
   chaseSpeed: 3
-  attackRange: 0.8
-  attackCooldown: 2
-  isRanged: 0
-  projectilePrefab: {fileID: 0}
-  firePoint: {fileID: 0}
-  projectileSpeed: 10
-  isBoss: 1
+  attackRange: 0.5
+  attackCooldown: 1.5
+  lootTable: []
   skillEffect: {fileID: 507136421729868517, guid: eb9e9438ab307ef4ba46c9e1727337ff, type: 3}
   attackIndicatorPrefab: {fileID: 488451184704202184, guid: b8938e90f555a0740b6fd8b6075228f1, type: 3}
   bossChargeSound:
@@ -409,11 +406,10 @@ MonoBehaviour:
     clips:
     - {fileID: 8300000, guid: ce45b64fe989fd54b99165d526cf7f4f, type: 3}
     volume: 1
-  bossChargeTime: 1.6
-  bossAttackRadius: 1.5
+  bossChargeTime: 2
+  bossAttackRadius: 3
   bossSkillCooldown: 5
   lastBossSkillTime: -999
-  lootTable: []
 --- !u!1 &3429986288919598872
 GameObject:
   m_ObjectHideFlags: 0

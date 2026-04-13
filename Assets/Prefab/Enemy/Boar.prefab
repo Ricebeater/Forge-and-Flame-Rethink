@@ -376,9 +376,9 @@ GameObject:
   - component: {fileID: 5501647243743809982}
   - component: {fileID: 1345588431603781991}
   - component: {fileID: 8602281860807413741}
-  - component: {fileID: 8829029005089796164}
   - component: {fileID: 8826095235194900788}
-  - component: {fileID: 1198531220698246127}
+  - component: {fileID: 2726737037556596333}
+  - component: {fileID: 3289603385702114763}
   m_Layer: 0
   m_Name: Boar
   m_TagString: Enemy
@@ -449,7 +449,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
@@ -471,23 +471,10 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 0.3
+  m_Height: 0.32
   m_BaseOffset: 0.15
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &8829029005089796164
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5738472655128574116}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 734c96a5a99687f44a8aebe0bf9ee55d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyAI
-  enemy: {fileID: 0}
 --- !u!114 &8826095235194900788
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -501,7 +488,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 0}
---- !u!114 &1198531220698246127
+--- !u!114 &2726737037556596333
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -510,36 +497,50 @@ MonoBehaviour:
   m_GameObject: {fileID: 5738472655128574116}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c7532ce059b7a84198475976f8ab47a, type: 3}
+  m_Script: {fileID: 11500000, guid: 734c96a5a99687f44a8aebe0bf9ee55d, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Enemy
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyAI
+  enemy: {fileID: 3289603385702114763}
+--- !u!114 &3289603385702114763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5738472655128574116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32aaaa4490de85240afdcb9c7ead5c77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpeedsterEnemy
   entityName: 
-  maxHP: 120
+  maxHP: 100
   currentHP: 0
-  damage: 1
-  flashDuration: 0.2
-  flashCount: 2
+  damage: 10
+  flashDuration: 0
+  flashCount: 0
   deadEffect: {fileID: 8245046640809465532, guid: dbb63399389ba6d41865e7007736fca3, type: 3}
   player: {fileID: 0}
   targetLayer:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 0
   groundLayer:
     serializedVersion: 2
-    m_Bits: 128
-  agent: {fileID: 8602281860807413741}
+    m_Bits: 64
+  agent: {fileID: 0}
   attackSounds:
     clips:
-    - {fileID: 0}
+    - {fileID: 8300000, guid: 22a8762ca18bc2e40aa57fdfeebcd040, type: 3}
     volume: 1
   hurtSound:
     clips:
     - {fileID: 8300000, guid: a3c4aa68956aff14a985d9fe9ff19c8b, type: 3}
-    volume: 0.5
+    - {fileID: 8300000, guid: 1a7f96dcf219e1048b110459aebfc797, type: 3}
+    volume: 1
   dieSound:
     clips:
     - {fileID: 8300000, guid: 9b29ee58c82af56438a869cd10897aa4, type: 3}
-    volume: 0.5
+    volume: 1
   walkBobSpeed: 10
   walkBobAmount: 0.1
   walkSwayAmount: 5
@@ -549,30 +550,9 @@ MonoBehaviour:
   maxWaitTime: 3
   patrolSpeed: 2
   chaseSpeed: 3
-  attackRange: 0.6
+  attackRange: 0.5
   attackCooldown: 1.5
-  isRanged: 0
-  projectilePrefab: {fileID: 0}
-  firePoint: {fileID: 0}
-  projectileSpeed: 10
-  isBoss: 0
-  skillEffect: {fileID: 0}
-  attackIndicatorPrefab: {fileID: 0}
-  bossChargeSound:
-    clips: []
-    volume: 1
-  bossExplosionSound:
-    clips: []
-    volume: 1
-  bossChargeTime: 2
-  bossAttackRadius: 3
-  bossSkillCooldown: 5
-  lastBossSkillTime: -999
-  lootTable:
-  - itemPrefab: {fileID: 7720585485506181569, guid: 48e4aff52fe648a4684c3c66987c19e6, type: 3}
-    dropChance: 50
-  - itemPrefab: {fileID: 5696632108905108876, guid: 5211c98f0e5a24a4aafcbc2a569f0571, type: 3}
-    dropChance: 50
+  lootTable: []
 --- !u!1 &6454100137140241648
 GameObject:
   m_ObjectHideFlags: 0

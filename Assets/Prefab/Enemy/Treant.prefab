@@ -219,9 +219,9 @@ GameObject:
   - component: {fileID: 1618025624351369152}
   - component: {fileID: 5848706055731175481}
   - component: {fileID: 5351595542857129509}
-  - component: {fileID: 6198229222619718642}
   - component: {fileID: 388553741937421358}
-  - component: {fileID: 3018647705105797778}
+  - component: {fileID: 6988735496750332060}
+  - component: {fileID: 3197974367796083320}
   m_Layer: 0
   m_Name: Treant
   m_TagString: Enemy
@@ -265,7 +265,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.21
+  m_Radius: 0.12
   m_Height: 0.72
   m_Direction: 1
   m_Center: {x: 0, y: -0.15, z: 0}
@@ -292,7 +292,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
@@ -305,7 +305,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 3252229227927214002}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.21
+  m_Radius: 0.12
   m_Speed: 2
   m_Acceleration: 8
   avoidancePriority: 50
@@ -314,23 +314,10 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 0.65
+  m_Height: 0.72
   m_BaseOffset: 0.48
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &6198229222619718642
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3252229227927214002}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 734c96a5a99687f44a8aebe0bf9ee55d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyAI
-  enemy: {fileID: 0}
 --- !u!114 &388553741937421358
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -344,7 +331,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 0}
---- !u!114 &3018647705105797778
+--- !u!114 &6988735496750332060
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -353,35 +340,49 @@ MonoBehaviour:
   m_GameObject: {fileID: 3252229227927214002}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c7532ce059b7a84198475976f8ab47a, type: 3}
+  m_Script: {fileID: 11500000, guid: 734c96a5a99687f44a8aebe0bf9ee55d, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Enemy
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyAI
+  enemy: {fileID: 3197974367796083320}
+--- !u!114 &3197974367796083320
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3252229227927214002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb614ac1c041e87498e092e5c2270f13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BigEnemy
   entityName: 
-  maxHP: 200
+  maxHP: 100
   currentHP: 0
-  damage: 2
-  flashDuration: 0.3
-  flashCount: 2
+  damage: 10
+  flashDuration: 0
+  flashCount: 0
   deadEffect: {fileID: 3333915296770053996, guid: ab67527754b38e34ca8c120929a4b75d, type: 3}
   player: {fileID: 0}
   targetLayer:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 0
   groundLayer:
     serializedVersion: 2
-    m_Bits: 128
-  agent: {fileID: 5351595542857129509}
+    m_Bits: 64
+  agent: {fileID: 0}
   attackSounds:
-    clips: []
+    clips:
+    - {fileID: 8300000, guid: 22a8762ca18bc2e40aa57fdfeebcd040, type: 3}
     volume: 1
   hurtSound:
     clips:
-    - {fileID: 8300000, guid: b24a0d87b5dc4544ea0e5c60550bb25a, type: 3}
-    volume: 0.5
+    - {fileID: 8300000, guid: 32e5f184282d7824ab66653a277669f5, type: 3}
+    volume: 1
   dieSound:
     clips:
     - {fileID: 8300000, guid: 5b3e7a9742722184196d5b1275a75cad, type: 3}
-    volume: 0.5
+    volume: 1
   walkBobSpeed: 10
   walkBobAmount: 0.1
   walkSwayAmount: 5
@@ -391,28 +392,9 @@ MonoBehaviour:
   maxWaitTime: 3
   patrolSpeed: 2
   chaseSpeed: 3
-  attackRange: 0.7
-  attackCooldown: 2
-  isRanged: 0
-  projectilePrefab: {fileID: 0}
-  firePoint: {fileID: 0}
-  projectileSpeed: 10
-  isBoss: 0
-  skillEffect: {fileID: 0}
-  attackIndicatorPrefab: {fileID: 0}
-  bossChargeSound:
-    clips: []
-    volume: 1
-  bossExplosionSound:
-    clips: []
-    volume: 1
-  bossChargeTime: 2
-  bossAttackRadius: 3
-  bossSkillCooldown: 5
-  lastBossSkillTime: -999
-  lootTable:
-  - itemPrefab: {fileID: 8808799717964235927, guid: f2316d2a93911f346b55fbb41558892b, type: 3}
-    dropChance: 100
+  attackRange: 0.6
+  attackCooldown: 1.5
+  lootTable: []
 --- !u!1 &3429986288919598872
 GameObject:
   m_ObjectHideFlags: 0
