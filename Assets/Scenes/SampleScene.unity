@@ -743,7 +743,7 @@ GameObject:
   m_Component:
   - component: {fileID: 332567174}
   - component: {fileID: 332567175}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Shadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -835,7 +835,7 @@ GameObject:
   - component: {fileID: 386028384}
   - component: {fileID: 386028383}
   - component: {fileID: 386028385}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1286,7 +1286,7 @@ GameObject:
   - component: {fileID: 795034471}
   - component: {fileID: 795034470}
   - component: {fileID: 795034473}
-  m_Layer: 7
+  m_Layer: 6
   m_Name: Terrain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1922,7 +1922,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   player: {fileID: 1049878864}
-  spawner: {fileID: 1829908147}
+  spawner: {fileID: 1829908148}
   menuCamera: {fileID: 1277735103}
   playerCamera: {fileID: 330585545}
   menuCanvas: {fileID: 1068546505}
@@ -1946,7 +1946,7 @@ GameObject:
   - component: {fileID: 1049878861}
   - component: {fileID: 1049878864}
   - component: {fileID: 1049878865}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -2933,6 +2933,56 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.0591, y: 0.00305, z: 22.75193}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1590902747
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1590902749}
+  - component: {fileID: 1590902748}
+  m_Layer: 0
+  m_Name: SpawningPos Test
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1590902748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1590902747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 605e753d4ef916e47988c15acacfecc1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AreaSpawner
+  enemyPrefab: {fileID: 3252229227927214002, guid: 9e9d11abb27fd984aafc9cf12da8e8ae, type: 3}
+  maxEnemies: 5
+  spawnInterval: 3
+  isActive: 1
+  spawnCenter: {fileID: 1590902749}
+  areaRadius: 5
+--- !u!4 &1590902749
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1590902747}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4110,6 +4160,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1829908146}
+  - component: {fileID: 1829908148}
   - component: {fileID: 1829908147}
   m_Layer: 0
   m_Name: SpawnManager
@@ -4144,26 +4195,31 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ba7874bda8d29684fa11ddfb8180d104, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SpawnManager
-  player: {fileID: 0}
-  timerText: {fileID: 1788538352}
-  ambientMusic: {fileID: 8300000, guid: 47d3b080ed9c2a94088d4fa972eded07, type: 3}
-  ambientVolume: 0.7
-  bossMusic: {fileID: 8300000, guid: 2c590ec9df1c0f74b92d3f22fa635e7d, type: 3}
-  bossVolume: 0.4
-  timeUntilBoss: 60
+  m_EditorClassIdentifier: Assembly-CSharp::AroundSpawner
   enemyPrefab: {fileID: 5738472655128574116, guid: 7100c06bbd8e440428c489b0c3b25104, type: 3}
-  maxEnemy: 10
-  specialEnemyPrefabs:
-  - {fileID: 5738472655128574116, guid: 45128c75c4150a44d96bd51a8086c808, type: 3}
-  - {fileID: 3252229227927214002, guid: 9e9d11abb27fd984aafc9cf12da8e8ae, type: 3}
-  maxSpecialEnemy: 4
-  specialSpawnChance: 50
+  maxEnemies: 5
+  spawnInterval: 3
+  isActive: 1
+  target: {fileID: 1049878860}
+  spawnRadius: 5
+  minSpawnDistance: 2
+--- !u!114 &1829908148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1829908145}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68a2a3a8ca332b54388939ec1aed2d70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpawnManager
+  player: {fileID: 1049878860}
+  timerText: {fileID: 1788538352}
+  timeUntilBoss: 60
   finalBossPrefab: {fileID: 3252229227927214002, guid: b1209d456e7459f4bbb975c65143f011, type: 3}
   bossSpawnDelay: 5
-  spawnRadius: 7
-  minSpawnDistance: 3
-  spawnInterval: 2
 --- !u!1 &1948163847 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4450798716734039041, guid: 808211142ee0cf741b4dab6ec5dfbb22, type: 3}
@@ -4754,3 +4810,4 @@ SceneRoots:
   - {fileID: 1049878860}
   - {fileID: 795034472}
   - {fileID: 1556893631}
+  - {fileID: 1590902749}
