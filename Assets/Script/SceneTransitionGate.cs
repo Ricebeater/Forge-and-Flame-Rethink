@@ -8,7 +8,6 @@ public class SceneTransitionGate : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-
             PlayerInventory inventory = FindAnyObjectByType<PlayerInventory>();
             InventoryManager.Instance.SavePlayerInventory(inventory);
 

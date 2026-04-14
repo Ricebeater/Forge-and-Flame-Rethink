@@ -38,11 +38,9 @@ public class PlayerController : Player
     private float lastAttackTime;
     private Rigidbody rb;
 
-
     private InputAction moveAction;
     private InputAction lookAction;
     private InputAction attackAction;
-
 
     protected override void Start()
     {
