@@ -17,5 +17,5 @@ MonoBehaviour:
   _width: 1
   _height: 1
   itemEffect: {fileID: 0}
-  itemPrefab: {fileID: 3364203386593174535, guid: fd89577f6ca8dfd41aa407c7ad0001d3, type: 3}
+  itemPrefab: {fileID: 8808799717964235927, guid: f2316d2a93911f346b55fbb41558892b, type: 3}
   icon: {fileID: 21300000, guid: 5b8bf9edcfeb0d349b8b9d69abb90cf3, type: 3}

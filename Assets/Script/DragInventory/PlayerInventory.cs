@@ -9,7 +9,7 @@ public class PlayerInventory : InventoryBase
     {
         if(Keyboard.current.cKey.wasPressedThisFrame)
         {
-            ShowItemInInventory();
+            InventoryManager.Instance.SavePlayerInventory(this);
         }
     }
 
@@ -25,19 +25,10 @@ public class PlayerInventory : InventoryBase
         cellSize = GlobalSetteing.GridSize;
         rectTransform.sizeDelta = new Vector2(gridWidth * cellSize, gridHeight * cellSize);
         //CreateSlot();
-    }
 
-    private void ShowItemInInventory()
-    {
-        for (int x = 0; x < gridWidth; x++)
+        if(InventoryManager.Instance != null)
         {
-            for (int y = 0; y < gridHeight; y++)
-            {
-                if (slots[x, y] != null)
-                {
-                    Debug.Log(slots[x, y].name);
-                }
-            }
+            InventoryManager.Instance.LoadPlayerInventory(this);
         }
     }
 }
