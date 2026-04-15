@@ -10,8 +10,6 @@ public class PlayerInteract : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
-
-        weaponSelectCanvas.alpha = 0f;
     }
 
     private void Update()
@@ -19,7 +17,7 @@ public class PlayerInteract : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E))
         {
             Interact();
-            ShowWeaponSelection();
+            OrderManager.Instance.ShowWeaponSelectMenu();
         }
     }
 
@@ -36,14 +34,6 @@ public class PlayerInteract : MonoBehaviour
                 Debug.Log("Interacted with customer: " + customer.name);
                 customer.SayHello();
             }
-        }
-    }
-
-    private void ShowWeaponSelection()
-    {
-        if (weaponSelectCanvas != null)
-        {
-            weaponSelectCanvas.alpha = 1f;
         }
     }
 

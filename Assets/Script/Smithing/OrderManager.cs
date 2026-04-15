@@ -3,7 +3,6 @@ using UnityEngine;
 public class OrderManager : MonoBehaviour
 {
     public static OrderManager Instance { get; private set; }
-    public CraftingStep CurrentStep { get; private set; } = CraftingStep.Idle;
 
     [Header("Current Order")]
     public CustomerOrderSO currentCustomerOrder;
@@ -12,6 +11,9 @@ public class OrderManager : MonoBehaviour
     public WeaponType selectedWeapon;
     public WeaponElement selectedWeaponElement;
     public OreType selectedOreType;
+
+    [Header("UI element")]
+    public CanvasGroup weaponSelectCanvas;
 
     private bool hasSelectedWeapon = false;
     private bool hasSelectedWeaponElement = false;
@@ -27,6 +29,11 @@ public class OrderManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    private void Start()
+    {
+        weaponSelectCanvas.alpha = 0f;
     }
 
     public void SelectedWeaponType(int typeIndex)
@@ -64,6 +71,8 @@ public class OrderManager : MonoBehaviour
         hasSelectedOreType = false;
         hasSelectedWeapon = false;
         hasSelectedWeaponElement = false;
+
+        
     }
 
     private void EvaluateCraft(CraftedWeapon craftedWeapon)
@@ -80,18 +89,39 @@ public class OrderManager : MonoBehaviour
         if (weaponMatch && elementMatch)
         {
             Debug.Log("(1) Crafting successful! The customer is satisfied.");
+            //Scoring and reward logic here
         }
         else if (weaponMatch || elementMatch)
         {
             Debug.Log("(0.5) Crafting partially successful. The customer is somewhat satisfied.");
+            //Scoring and reward logic here
         }
         else
         {
             Debug.Log("(0) Crafting failed. The customer is dissatisfied.");
+            //Scoring and reward logic here
         }
     }
 
-    
+    public void ShowWeaponSelectMenu()
+    {
+        if(weaponSelectCanvas != null)
+        {
+            weaponSelectCanvas.alpha = 1f;
+            weaponSelectCanvas.blocksRaycasts = true;
+            weaponSelectCanvas.interactable = true;
+        }
+    }
+
+    public void HideWeaponSelectMenu()
+    {
+        if(weaponSelectCanvas != null)
+        {
+            weaponSelectCanvas.alpha = 0f;
+            weaponSelectCanvas.blocksRaycasts = false;
+            weaponSelectCanvas.interactable = false;
+        }
+    }
 }
 
 public struct CraftedWeapon
@@ -106,15 +136,6 @@ public struct CraftedWeapon
         }
     }
 
-public enum CraftingStep
-{
-    Idle,
-    TakeOrder,
-    Smelting,
-    Forging,
-    Quenching,
-    Deliver
-}
 
 public enum OreType
 {
