@@ -4,11 +4,14 @@ public class PlayerInteract : MonoBehaviour
 {
     [SerializeField] private float interactRange = 2f;
     [SerializeField] private float interactRadius = 0.5f;
+    [SerializeField] private CanvasGroup weaponSelectCanvas;
 
     private void Start()
     {
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+
+        weaponSelectCanvas.alpha = 0f;
     }
 
     private void Update()
@@ -16,6 +19,7 @@ public class PlayerInteract : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E))
         {
             Interact();
+            ShowWeaponSelection();
         }
     }
 
@@ -32,6 +36,14 @@ public class PlayerInteract : MonoBehaviour
                 Debug.Log("Interacted with customer: " + customer.name);
                 customer.SayHello();
             }
+        }
+    }
+
+    private void ShowWeaponSelection()
+    {
+        if (weaponSelectCanvas != null)
+        {
+            weaponSelectCanvas.alpha = 1f;
         }
     }
 

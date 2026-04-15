@@ -123,6 +123,7 @@ public class PlayerController : Player
             Cursor.visible = true;
         }
     }
+
     public void SetControl(bool state)
     {
         canControl = state;
@@ -138,6 +139,7 @@ public class PlayerController : Player
             if (animator != null) animator.SetBool("isWalking", false);
         }
     }
+
     void HandleRotation()
     {
         if (!isCursorLocked) return;
@@ -261,6 +263,7 @@ public class PlayerController : Player
             }
         }
     }
+
     public override void TakeDamage(int damageAmount)
     {
         base.TakeDamage(damageAmount);
