@@ -46,6 +46,8 @@ public class InventoryManager : MonoBehaviour
 
     public void LoadPlayerInventory(PlayerInventory inventory)
     {
+        inventory.LoadSuppliesFromList(savedItems);
+
         foreach (ItemData data in savedItems)
         {
             InventoryItem[] allItems = FindObjectsByType<InventoryItem>(FindObjectsSortMode.None);

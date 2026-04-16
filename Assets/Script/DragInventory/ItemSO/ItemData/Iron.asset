@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 916ee2c9ff2c08c42b1b673f75672217, type: 3}
-  m_Name: Bone
+  m_Name: Iron
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
-  itemName: Bone
-  itemType: 0
+  itemName: Iron
+  itemType: 1
   _width: 1
   _height: 1
-  itemEffect: {fileID: 0}
-  itemPrefab: {fileID: 5696632108905108876, guid: 5211c98f0e5a24a4aafcbc2a569f0571, type: 3}
-  icon: {fileID: 21300000, guid: af07911109a57a34da9bf3993ac29251, type: 3}
+  itemEffect: {fileID: 11400000, guid: bd0b15139304d6c4cb14841f4c92d539, type: 2}
+  itemPrefab: {fileID: 7720585485506181569, guid: 48e4aff52fe648a4684c3c66987c19e6, type: 3}
+  icon: {fileID: 21300000, guid: 9edbe3a8577b22c44917054a07cce25f, type: 3}
