@@ -15,6 +15,14 @@ public class OrderManager : MonoBehaviour
     [Header("UI element")]
     public CanvasGroup weaponSelectCanvas;
 
+    [Header("Supplies Data")]
+    public ItemData redGemData;
+    public ItemData blueGemData;
+    public ItemData enchantedWoodData;
+    public ItemData ironData;
+    public ItemData silverData;
+    public ItemData goldData;
+
     private bool hasSelectedWeapon = false;
     private bool hasSelectedWeaponElement = false;
     private bool hasSelectedOreType = false;
@@ -34,6 +42,10 @@ public class OrderManager : MonoBehaviour
     private void Start()
     {
         weaponSelectCanvas.alpha = 0f;
+
+        hasSelectedOreType = false;
+        hasSelectedWeapon = false;
+        hasSelectedWeaponElement = false;
     }
 
     public void SelectedWeaponType(int typeIndex)
@@ -57,22 +69,63 @@ public class OrderManager : MonoBehaviour
         Debug.Log($"Selected Ore Type: {oreTypeIndex}");
     }
 
+    public bool IsReadyToCraft()
+    {
+        return hasSelectedWeapon && hasSelectedWeaponElement && hasSelectedOreType;
+    }
+
+    public WeaponElement GetSelectedWeaponElement()
+    {
+        return selectedWeaponElement;
+    }
+
+    public OreType GetSelectedOreType()
+    {
+        return selectedOreType;
+    }
+
     public void CraftWeapon()
     {
-        if (!hasSelectedWeapon || !hasSelectedWeaponElement || !hasSelectedOreType)
+        if (currentCustomerOrder == null)
         {
-            Debug.Log("Please make all selections before crafting.");
+            Debug.Log("No current customer order to evaluate.");
             return;
         }
-        CraftedWeapon craftedWeapon = new CraftedWeapon(selectedWeapon, selectedWeaponElement);
-        
-        EvaluateCraft(craftedWeapon);
 
-        hasSelectedOreType = false;
-        hasSelectedWeapon = false;
-        hasSelectedWeaponElement = false;
+        ItemData requiredOre = GetSelectedOreData();
+        ItemData requiredElement = GetSelectedElementData();
 
-        
+        PlayerInventory inventory = FindAnyObjectByType<PlayerInventory>();
+        if (inventory == null)
+        {
+            Debug.Log("Player inventory not found. Cannot evaluate craft.");
+            return;
+        }
+
+        bool hasOre = inventory.supplyPouch.ContainsKey(requiredOre) && inventory.supplyPouch[requiredOre] >= 1;
+        bool hasElement = inventory.supplyPouch.ContainsKey(requiredElement) && inventory.supplyPouch[requiredElement] >= 1;
+
+        if (hasOre && hasElement)
+        {
+            inventory.RemoveSupply(requiredOre, 1);
+            inventory.RemoveSupply(requiredElement, 1);
+            Debug.Log($"Removed 1 {requiredOre.itemName} and 1 {requiredElement.itemName} from inventory.");
+
+            CraftedWeapon craftedWeapon = new CraftedWeapon(selectedWeapon, selectedWeaponElement);
+            EvaluateCraft(craftedWeapon);
+
+            hasSelectedOreType = false;
+            hasSelectedWeapon = false;
+            hasSelectedWeaponElement = false;
+            
+            HideWeaponSelectMenu();
+            SmithingManager.Instance.StartSmithing();
+            
+        }
+        else
+        {
+            Debug.Log("Not enough resources to craft this weapon!");
+        }
     }
 
     private void EvaluateCraft(CraftedWeapon craftedWeapon)
@@ -120,6 +173,28 @@ public class OrderManager : MonoBehaviour
             weaponSelectCanvas.alpha = 0f;
             weaponSelectCanvas.blocksRaycasts = false;
             weaponSelectCanvas.interactable = false;
+        }
+    }
+
+    private ItemData GetSelectedOreData()
+    {
+        switch (selectedOreType)
+        {
+            case OreType.Iron: return ironData;
+            case OreType.Silver: return silverData;
+            case OreType.Gold: return goldData;
+            default: return null;
+        }
+    }
+
+    private ItemData GetSelectedElementData()
+    {
+        switch (selectedWeaponElement)
+        {
+            case WeaponElement.Fire: return redGemData;
+            case WeaponElement.Water: return blueGemData;
+            case WeaponElement.Plant: return enchantedWoodData;
+            default: return null;
         }
     }
 }

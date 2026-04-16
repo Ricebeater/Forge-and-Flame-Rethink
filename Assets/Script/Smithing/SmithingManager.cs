@@ -6,7 +6,7 @@ public class SmithingManager : MonoBehaviour
     public static SmithingManager Instance { get; private set; }
     
     public CraftingStep currentCraftingStep { get; private set; } = CraftingStep.Idle;
-    
+
     [Header("Minigames")]
     public SmelthingMinigame smelthingGame;
     public ForgingMinigame forgingGame;
@@ -17,6 +17,7 @@ public class SmithingManager : MonoBehaviour
     private float quenchingScore;
     private float totalScore;
 
+
     private void Awake()
     {
         if(Instance == null)
@@ -26,15 +27,6 @@ public class SmithingManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
-        }
-    }
-
-    public void StartCrafting()
-    {
-        if (currentCraftingStep == CraftingStep.Idle)
-        {
-            currentCraftingStep = CraftingStep.Smelting;
-            Debug.Log("Crafting started: Taking order.");
         }
     }
 
@@ -80,13 +72,11 @@ public class SmithingManager : MonoBehaviour
 
     public void FinalSmithingScore()
     {
-        int smeltScore = smelthingGame.GetSmeltScore();
-        int forgeScore = forgingGame.GetForgeScore();
-        int quenchScore = quenchingGame.GetQuenchScore();
+        totalScore = smeltingScore + forgingScore + quenchingScore;
+        Debug.Log($"Final Smithing Score: {totalScore}");
 
-        totalScore = smeltScore + forgeScore + quenchScore;
-            Debug.Log($"Final Smithing Score: {totalScore}");
     }
+
 }
 
 public enum CraftingStep

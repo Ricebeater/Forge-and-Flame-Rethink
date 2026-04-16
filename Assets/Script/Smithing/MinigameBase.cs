@@ -22,8 +22,10 @@ public class MinigameBase : MonoBehaviour
     {
         isPlaying = false;
         HideMinigameUI();
-
+        
         SmithingManager.Instance.CompleteCurrentStep(score);
+        
+        score = 0;
     }
 
     public virtual void ShowMinigameUI()

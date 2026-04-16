@@ -18,14 +18,6 @@ public class PlayerInventory : InventoryBase
     [SerializeField] private TextMeshProUGUI silverCountText;
     [SerializeField] private TextMeshProUGUI goldCountText;
 
-    [Header("Supplies Data")]
-    [SerializeField] private ItemData redGemData;
-    [SerializeField] private ItemData blueGemData;
-    [SerializeField] private ItemData enchantedWoodData;
-    [SerializeField] private ItemData ironData;
-    [SerializeField] private ItemData silverData;
-    [SerializeField] private ItemData goldData;
-
     private void Update()
     {
         if(Keyboard.current.cKey.wasPressedThisFrame)
@@ -45,7 +37,6 @@ public class PlayerInventory : InventoryBase
     {
         cellSize = GlobalSetteing.GridSize;
         rectTransform.sizeDelta = new Vector2(gridWidth * cellSize, gridHeight * cellSize);
-        //CreateSlot();
 
         if(InventoryManager.Instance != null)
         {
@@ -90,6 +81,7 @@ public class PlayerInventory : InventoryBase
         {
             supplyPouch[item] -= amount;
             
+            UpdateSupplyUI();
             return true;
         }
 
@@ -97,14 +89,29 @@ public class PlayerInventory : InventoryBase
         return false;
     }
 
+    public bool CraftingRemoveSupply(ItemData element, ItemData ore)
+    {
+        if (supplyPouch.ContainsKey(element) && supplyPouch[element] >= 1)
+        {
+            if (supplyPouch.ContainsKey(ore) && supplyPouch[ore] >= 1)
+            {
+                supplyPouch[ore] -= 1;
+                supplyPouch[element] -= 1;
+            }
+            return true;
+        }
+        Debug.Log("not enough supply");
+        return false;
+    }
+
     public void UpdateSupplyUI()
     {
-        redGemCountText.text        = GetAmount(redGemData).ToString();
-        blueGemCountText.text       = GetAmount(blueGemData).ToString();
-        enchantedWoodCountText.text = GetAmount(enchantedWoodData).ToString();
-        ironCountText.text          = GetAmount(ironData).ToString();
-        silverCountText.text        = GetAmount(silverData).ToString();
-        goldCountText.text          = GetAmount(goldData).ToString();
+        redGemCountText.text        = GetAmount(OrderManager.Instance.redGemData).ToString();
+        blueGemCountText.text       = GetAmount(OrderManager.Instance.blueGemData).ToString();
+        enchantedWoodCountText.text = GetAmount(OrderManager.Instance.enchantedWoodData).ToString();
+        ironCountText.text          = GetAmount(OrderManager.Instance.ironData).ToString();
+        silverCountText.text        = GetAmount(OrderManager.Instance.silverData).ToString();
+        goldCountText.text          = GetAmount(OrderManager.Instance.goldData).ToString();
     }
 
     private int GetAmount(ItemData item)

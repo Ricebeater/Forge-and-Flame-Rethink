@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: EnchantedWood
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemName: Enchanted Wood
-  itemType: 0
+  itemType: 2
   _width: 1
   _height: 1
   itemEffect: {fileID: 0}
