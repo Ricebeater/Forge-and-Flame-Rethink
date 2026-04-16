@@ -1,11 +1,12 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class SmithingManager : MonoBehaviour
 {
     public static SmithingManager Instance { get; private set; }
     
     public CraftingStep currentCraftingStep { get; private set; } = CraftingStep.Idle;
-
+    
     [Header("Minigames")]
     public SmelthingMinigame smelthingGame;
     public ForgingMinigame forgingGame;
@@ -30,9 +31,9 @@ public class SmithingManager : MonoBehaviour
 
     public void StartCrafting()
     {
-        if (currentCraftingStep == CraftingStep.Smelting)
+        if (currentCraftingStep == CraftingStep.Idle)
         {
-            currentCraftingStep = CraftingStep.TakeOrder;
+            currentCraftingStep = CraftingStep.Smelting;
             Debug.Log("Crafting started: Taking order.");
         }
     }
@@ -46,23 +47,31 @@ public class SmithingManager : MonoBehaviour
     {
         totalScore += stepScore;
 
-        if(currentCraftingStep == CraftingStep.Smelting)
+        switch (currentCraftingStep)
         {
-            currentCraftingStep = CraftingStep.Smelting;
+            case CraftingStep.Smelting:
+                smeltingScore = stepScore;
+                currentCraftingStep = CraftingStep.Forging;
+                forgingGame.StartGame();
+                break;
+            
+            case CraftingStep.Forging:
+                forgingScore = stepScore;
+                currentCraftingStep = CraftingStep.Quenching;
+                quenchingGame.StartGame();
+                break;
+
+            case CraftingStep.Quenching:
+                quenchingScore = stepScore;
+                currentCraftingStep = CraftingStep.Idle;
+                FinalSmithingScore();
+                break;
         }
-        else if(currentCraftingStep == CraftingStep.Forging)
-        {
-            currentCraftingStep = CraftingStep.Forging;
-        }
-        else if(currentCraftingStep == CraftingStep.Quenching)
-        {
-            currentCraftingStep = CraftingStep.Quenching;
-        }
-        
     }
 
     public void StartSmithing()
     {
+        currentCraftingStep = CraftingStep.Smelting;
         if (smelthingGame != null)
         {
             smelthingGame.StartGame();
@@ -83,9 +92,7 @@ public class SmithingManager : MonoBehaviour
 public enum CraftingStep
 {
     Idle,
-    TakeOrder,
     Smelting,
     Forging,
-    Quenching,
-    Deliver
+    Quenching
 }

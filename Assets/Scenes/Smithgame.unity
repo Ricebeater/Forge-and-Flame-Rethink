@@ -203,7 +203,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1687733312}
-        m_TargetAssemblyTypeName: SmelthingGame, Assembly-CSharp
+        m_TargetAssemblyTypeName: SmelthingMinigame, Assembly-CSharp
         m_MethodName: EndGame
         m_Mode: 1
         m_Arguments:
@@ -382,8 +382,8 @@ CanvasGroup:
   m_GameObject: {fileID: 121241577}
   m_Enabled: 1
   m_Alpha: 0
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
 --- !u!114 &121241580
 MonoBehaviour:
@@ -678,8 +678,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: SmelthingGame, Assembly-CSharp
+      - m_Target: {fileID: 1492172725}
+        m_TargetAssemblyTypeName: QuenchingMinigame, Assembly-CSharp
         m_MethodName: AddScore
         m_Mode: 1
         m_Arguments:
@@ -2070,7 +2070,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Smelthing
+  m_text: Forging
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3547,7 +3547,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Smelthing
+  m_text: Quenching
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -4660,8 +4660,8 @@ CanvasGroup:
   m_GameObject: {fileID: 1438367687}
   m_Enabled: 1
   m_Alpha: 0
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
 --- !u!114 &1438367690
 MonoBehaviour:
@@ -4961,7 +4961,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a20f6ea06870f744bbfc8d7ceb61457, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::QuenchingMinigame
-  minigameCanvas: {fileID: 0}
+  minigameCanvas: {fileID: 121241579}
 --- !u!224 &1492172726
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5828,9 +5828,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1866357462}
-        m_TargetAssemblyTypeName: SmithingManager, Assembly-CSharp
-        m_MethodName: FinalSmithingScore
+      - m_Target: {fileID: 1492172725}
+        m_TargetAssemblyTypeName: QuenchingMinigame, Assembly-CSharp
+        m_MethodName: EndGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6927,7 +6927,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce995ffa19de184429eb23a77a920944, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ForgingMinigame
-  minigameCanvas: {fileID: 0}
+  minigameCanvas: {fileID: 1438367689}
 --- !u!224 &1923189914
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7147,8 +7147,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: SmelthingGame, Assembly-CSharp
+      - m_Target: {fileID: 1923189913}
+        m_TargetAssemblyTypeName: ForgingMinigame, Assembly-CSharp
         m_MethodName: AddScore
         m_Mode: 1
         m_Arguments:
@@ -7246,8 +7246,8 @@ CanvasGroup:
   m_GameObject: {fileID: 2014070763}
   m_Enabled: 1
   m_Alpha: 0
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
 --- !u!114 &2014070766
 MonoBehaviour:

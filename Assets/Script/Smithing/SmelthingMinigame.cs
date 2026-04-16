@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class SmelthingMinigame : MinigameBase
 {
-    private int smeltScore;
-
     private void Start()
     {
         score = 0;
