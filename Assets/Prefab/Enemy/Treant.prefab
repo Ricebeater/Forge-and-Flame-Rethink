@@ -377,7 +377,9 @@ MonoBehaviour:
   chaseSpeed: 3
   attackRange: 0.6
   attackCooldown: 1.5
-  lootTable: []
+  lootTable:
+  - itemPrefab: {fileID: 0}
+    dropChance: 0
 --- !u!1 &3429986288919598872
 GameObject:
   m_ObjectHideFlags: 0

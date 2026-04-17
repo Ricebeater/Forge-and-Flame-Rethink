@@ -1,161 +1,185 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 public class SmelthingMinigame : MinigameBase
 {
-    private void Start()
+    [Header("Game Settings")]
+    [SerializeField] private float timePerRound = 3f;
+    [SerializeField] private int maxRounds = 3;
+    [SerializeField] private int maxFails = 3;
+
+    [Header("UI References")]
+    [SerializeField] private Image[] arrowDisplays;
+    [SerializeField] private Slider timerSlider;
+
+    [Header("Arrow Sprites")]
+    [SerializeField] private Sprite upArrowSprite;
+    [SerializeField] private Sprite downArrowSprite;
+    [SerializeField] private Sprite leftArrowSprite;
+    [SerializeField] private Sprite rightArrowSprite;
+
+    private List<KeyCode> currentSequence = new List<KeyCode>();
+    private int currentInputIndex = 0;
+    private int roundsWon = 0;
+    private int currentRound = 0;
+    private int fails = 0;
+    private float timeRemaining;
+    
+
+    public override void StartGame()
     {
+        base.StartGame();
+
         score = 0;
+        currentRound = 0;
+        roundsWon = 0;
+        fails = 0;
+
+        if (timerSlider != null)
+        {
+            timerSlider.maxValue = timePerRound;
+        }
+
+        StartNewRound();
     }
 
-    public void AddScore()
+    private void Update()
     {
-        score++;
-        Debug.Log("Smelthing Score :" + score);
+        if (!isPlaying) return;
+
+        HandleTimer();
+        HandleInput();
+    }
+
+    private void StartNewRound()
+    {
+        currentInputIndex = 0;
+        timeRemaining = timePerRound;
+        GenerateSequence();
+        UpdateArrowUI();
+    }
+
+    private void GenerateSequence()
+    {
+        currentSequence.Clear();
+        KeyCode[] possibleKeys = { KeyCode.UpArrow, KeyCode.DownArrow, KeyCode.LeftArrow, KeyCode.RightArrow };
+
+        for (int i = 0; i < 4; i++)
+        {
+            KeyCode randomKey = possibleKeys[Random.Range(0, possibleKeys.Length)];
+            currentSequence.Add(randomKey);
+        }
+    }
+
+    private void UpdateArrowUI()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            if (i < arrowDisplays.Length)
+            {
+                arrowDisplays[i].color = Color.white;
+
+                switch (currentSequence[i])
+                {
+                    case KeyCode.UpArrow: arrowDisplays[i].sprite = upArrowSprite; break;
+                    case KeyCode.DownArrow: arrowDisplays[i].sprite = downArrowSprite; break;
+                    case KeyCode.LeftArrow: arrowDisplays[i].sprite = leftArrowSprite; break;
+                    case KeyCode.RightArrow: arrowDisplays[i].sprite = rightArrowSprite; break;
+                }
+            }
+        }
+    }
+
+    private void HandleTimer()
+    {
+        timeRemaining -= Time.deltaTime;
+
+        if (timerSlider != null)
+        {
+            timerSlider.value = timeRemaining;
+        }
+
+        if (timeRemaining <= 0)
+        {
+            Debug.Log("Time ran out!");
+            FailAttempt();
+        }
+    }
+
+    private void HandleInput()
+    {
+        if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.DownArrow) ||
+            Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            KeyCode expectedKey = currentSequence[currentInputIndex];
+
+            if (Input.GetKeyDown(expectedKey))
+            {
+                arrowDisplays[currentInputIndex].color = Color.gray;
+                currentInputIndex++;
+
+                if (currentInputIndex >= currentSequence.Count)
+                {
+                    RoundWon();
+                }
+            }
+            else
+            {
+                Debug.Log("Wrong arrow pressed!");
+                FailAttempt();
+            }
+        }
+    }
+
+    private void RoundWon()
+    {
+        currentRound++;
+        roundsWon++;
+        Debug.Log($"Round {roundsWon} Won!");
+
+        if (currentRound >= maxRounds)
+        {
+            
+            if(fails > 0)
+            {
+                score = 99 - (fails * 33);
+            }
+            else
+            {
+                score = 100;
+            }
+            Debug.Log("All 3 rounds successful! Perfect Score: " + score);
+            EndGame();
+        }
+        else
+        {
+            score += 33;
+            StartNewRound();
+        }
+    }
+
+    private void FailAttempt()
+    {
+        currentRound++;
+        fails++;
+        Debug.Log($"Failed! Chances used: {fails}/{maxFails}");
+
+        if (currentRound >= maxFails)
+        {
+            Debug.Log($"Minigame Failed entirely. Final Score: {score}");
+            EndGame();
+        }
+        else
+        {
+            StartNewRound();
+        }
     }
 
     public int GetSmeltScore()
     {
         return (int)score;
-    }
-
-    [Header("Value")]
-    [SerializeField] private float requiredHeat = 100f;
-    [SerializeField] private float currentHeat = 0f;
-    [SerializeField] private float heatIncreaseRate = 10f;
-    [SerializeField] private float heatDecreaseRate = 1f;
-    private bool isMinigameActive = false;
-    private bool isMinigameFinnished = false;
-
-    [Header("Timer")]
-    [SerializeField] private float smeltDuration = 6f;
-    private float smeltTimer = 0f;
-    private bool timerStarted = false;
-
-    //Calculate Avarage Heat
-    private float heatAccumulator = 0f;
-    private int heatSampleCount = 0;
-    private float averageHeat = 0f;
-
-    [Header("Debug")]
-    public bool isMiniGameActive;
-
-    [Header("UI")]
-    [SerializeField] private TextMeshProUGUI heatText;
-    [SerializeField] private TextMeshProUGUI timerText;
-    [SerializeField] private TextMeshProUGUI scoreText;
-    [SerializeField] private Image HeatBar;
-    [SerializeField] private GameObject smeltingUI;
-    [SerializeField] private Image TimerCircle;
-
-
-    public void StartMinigame()
-    {
-        isMinigameActive = true;
-        isMinigameFinnished = false;
-        timerStarted = false;
-        smeltTimer = 0f;
-        currentHeat = 0f;
-        heatAccumulator = 0f;
-        heatSampleCount = 0;
-        averageHeat = 0f;
-        Debug.Log("Smelting minigame started.");
-    }
-
-    public void EndMinigame()
-    {
-        isMinigameActive = false;
-        isMinigameFinnished = false;
-        timerStarted = false;
-        smeltTimer = 0f;
-        currentHeat = 0f;
-        Debug.Log("Smelting minigame ended.");
-    }
-
-    private void Update()
-    {
-        isMiniGameActive = isMinigameActive;
-        currentHeat = Mathf.Clamp(currentHeat, 0f, requiredHeat);
-        HandleUI();
-
-        if (!isMinigameActive) { return; }
-
-        // first click
-        if (!timerStarted)
-        {
-            if (Mouse.current.leftButton.wasPressedThisFrame)
-            {
-                float firstClickBoost = 90f; // boost the first click, player only need to maintian click rate for good score
-
-                timerStarted = true;
-                currentHeat += heatIncreaseRate + firstClickBoost;
-                Debug.Log("Smelting timer started!!!");
-            }
-
-            return;
-
-        }
-
-        smeltTimer += Time.deltaTime;
-
-        if (smeltTimer > 0f) { currentHeat -= heatDecreaseRate * Time.deltaTime; }
-
-        if (Mouse.current.leftButton.wasPressedThisFrame) { currentHeat += heatIncreaseRate; }
-
-        heatAccumulator += currentHeat;
-        heatSampleCount++;
-
-        if (smeltTimer >= smeltDuration)
-        {
-            timerStarted = false;
-            averageHeat = heatSampleCount > 0 ? heatAccumulator / heatSampleCount : 0f;
-            isMinigameActive = false;
-            isMinigameFinnished = true;
-
-
-            Debug.Log($"Smelting done! Average heat: {averageHeat:F1}");
-        }
-    }
-
-    public float CalculatedScore()
-    {
-        if (currentHeat >= requiredHeat)
-        {
-            return 100f;
-        }
-
-        return ((averageHeat / requiredHeat) * 100f);
-
-    }
-
-    private void HandleUI()
-    {
-        smeltingUI.SetActive(isMinigameActive);
-
-        int heatDisplay = Mathf.FloorToInt(currentHeat);
-        heatText.text = "Heat: " + heatDisplay;
-
-        if (timerText != null)
-        {
-            if (timerStarted)
-            {
-                float remaing = smeltDuration - smeltTimer;
-                timerText.text = "Time: " + remaing.ToString("F1") + " s";
-            }
-            else
-            {
-                timerText.text = isMinigameActive ? "Left click to start!" : "";
-            }
-        }
-
-        if (scoreText != null)
-        {
-            scoreText.text = "Score: " + CalculatedScore().ToString("F1");
-            scoreText.gameObject.SetActive(isMinigameFinnished);
-        }
-
-        float heatPercent = currentHeat / requiredHeat;
-    }
+    }   
 }
