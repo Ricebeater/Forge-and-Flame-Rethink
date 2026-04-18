@@ -1,13 +1,16 @@
-using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class InventoryManager : MonoBehaviour
 {
     public static InventoryManager Instance { get; private set; }
 
-    private List<ItemData> savedItems = new List<ItemData>();
+    [Header("Global Inventory Data")]
+
+    private List<ItemData> savedGridItems = new List<ItemData>();
+    public Dictionary<ItemData, int> supplyPouch = new Dictionary<ItemData, int>();
+
+    public List<ItemData> huntBag = new List<ItemData>();
 
     private void Awake()
     {
@@ -22,33 +25,67 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    public void SavePlayerInventory(PlayerInventory inventory)
+    public void AddToPouch(ItemData item, int amount = 1)
     {
-        savedItems.Clear();
+        if (supplyPouch.ContainsKey(item))
+        {
+            supplyPouch[item] += amount;
+        }
+        else
+        {
+            supplyPouch.Add(item, amount);
+        }
+    }
 
+    public bool RemoveFromPouch(ItemData item, int amount = 1)
+    {
+        if (supplyPouch.ContainsKey(item) && supplyPouch[item] >= amount)
+        {
+            supplyPouch[item] -= amount;
+            return true;
+        }
+        return false;
+    }
+
+    public int GetPouchAmount(ItemData item)
+    {
+        if (item == null) return 0;
+        return supplyPouch.TryGetValue(item, out int amount) ? amount : 0;
+    }
+
+    public void EmptyHuntBagIntoPouch()
+    {
+        foreach (ItemData material in huntBag)
+        {
+            AddToPouch(material, 1);
+        }
+        huntBag.Clear();
+        Debug.Log($"Emptied Hunt Bag! Pouch now has {supplyPouch.Count} unique material types.");
+    }
+
+
+    public void SaveGridInventory(PlayerInventory inventory)
+    {
+        savedGridItems.Clear();
         for (int x = 0; x < inventory.gridWidth; x++)
         {
             for (int y = 0; y < inventory.gridHeight; y++)
             {
                 InventoryItem item = inventory.slots[x, y];
-
                 if (item != null && item.gridX == x && item.gridY == y)
                 {
-                    savedItems.Add(item.itemData);
+                    savedGridItems.Add(item.itemData);
                     item.transform.SetParent(null);
                     DontDestroyOnLoad(item.gameObject);
                 }
             }
         }
-
-        Debug.Log("Player inventory saved with " + savedItems.Count + " items.");
+        Debug.Log($"Backpack saved with {savedGridItems.Count} grid items.");
     }
 
-    public void LoadPlayerInventory(PlayerInventory inventory)
+    public void LoadGridInventory(PlayerInventory inventory)
     {
-        inventory.LoadSuppliesFromList(savedItems);
-
-        foreach (ItemData data in savedItems)
+        foreach (ItemData data in savedGridItems)
         {
             InventoryItem[] allItems = FindObjectsByType<InventoryItem>(FindObjectsSortMode.None);
             foreach (InventoryItem item in allItems)
@@ -56,11 +93,9 @@ public class InventoryManager : MonoBehaviour
                 if (item.itemData == data)
                 {
                     inventory.AutoPlaceItem(item);
-                    Debug.Log("Loaded item: " + item.itemData.itemName);
                     break;
                 }
             }
         }
     }
-
 }

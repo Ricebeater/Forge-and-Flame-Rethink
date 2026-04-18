@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -28,6 +29,7 @@ public class ForgingMinigame : MinigameBase
     private float currentAngle = 0f;
     private int currentRound = 0;
     private int currentFails = 0;
+    private int needleDirection = 1;
 
     public override void StartGame()
     {
@@ -35,14 +37,17 @@ public class ForgingMinigame : MinigameBase
         score = 0;
         currentRound = 0;
         currentFails = 0;
+        needleDirection = 1;
 
         StartNewRound();
     }
 
     private void StartNewRound()
     {
+        needleDirection *= -1;
+
         float randomAngle = Random.Range(0, 360);
-        currentAngle = 0f;
+        //currentAngle = 0f;
 
         successAngleMin = 0f;
         successAngleMax = 0f;
@@ -73,11 +78,17 @@ public class ForgingMinigame : MinigameBase
 
     private void MoveNeedle()
     {
-        currentAngle += RotationSpeed * Time.deltaTime;
+        if (isPaused) { return; }
+
+        currentAngle += RotationSpeed * needleDirection * Time.deltaTime;
 
         if(currentAngle >= 360f)
         {
             currentAngle -= 360f;
+        }
+        if (currentAngle < 0f)
+        {
+            currentAngle += 360f;
         }
         
         if(needleTransform != null)
@@ -111,7 +122,7 @@ public class ForgingMinigame : MinigameBase
             currentRound++;
             StartNewRound();
         }
-        
+
         else
         {
             Debug.Log("Missed!");
@@ -154,6 +165,20 @@ public class ForgingMinigame : MinigameBase
         SMin.text = $"Success Min: {successAngleMin:F1}";
         PMax.text = $"Perfect Max: {perfectAngleMax:F1}";
         PMin.text = $"Perfect Min: {perfectAngleMin:F1}";
+    }
+
+    // Dramatic pause
+    private bool isPaused = false;
+    private void DramaticPause()
+    {
+        StartCoroutine(PauseRoutine());
+    }
+
+    private IEnumerator PauseRoutine()
+    {
+        isPaused = true;
+        yield return new WaitForSecondsRealtime(1f); // uses real time, ignores timeScale
+        isPaused = false;
     }
 
 }

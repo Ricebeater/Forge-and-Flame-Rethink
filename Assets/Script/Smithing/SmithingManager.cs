@@ -5,7 +5,7 @@ public class SmithingManager : MonoBehaviour
 {
     public static SmithingManager Instance { get; private set; }
     
-    public CraftingStep currentCraftingStep { get; private set; } = CraftingStep.Idle;
+    public CraftingStep currentCraftingStep { get; private set; } = CraftingStep.Waiting;
 
     [Header("Minigames")]
     public SmelthingMinigame smelthingGame;
@@ -44,23 +44,27 @@ public class SmithingManager : MonoBehaviour
             case CraftingStep.Smelting:
                 smeltingScore = stepScore;
                 currentCraftingStep = CraftingStep.Forging;
+                Debug.Log("Current Step: Forging");
                 forgingGame.StartGame();
                 break;
             
             case CraftingStep.Forging:
                 forgingScore = stepScore;
                 currentCraftingStep = CraftingStep.Quenching;
+                Debug.Log("Current Step: Quenching");
                 quenchingGame.StartGame();
                 break;
 
             case CraftingStep.Quenching:
                 quenchingScore = stepScore;
                 currentCraftingStep = CraftingStep.Delivering;
+                Debug.Log("Current Step: Delivering");
                 FinalSmithingScore();
                 break;
 
             case CraftingStep.Delivering:
-                currentCraftingStep = CraftingStep.Idle;
+                currentCraftingStep = CraftingStep.Waiting;
+                Debug.Log("Current Step: Waiting");
                 break;
         }
     }
@@ -87,11 +91,16 @@ public class SmithingManager : MonoBehaviour
         return currentCraftingStep == step;
     }
 
+    public float GetTotalScore()
+    {
+        return totalScore;
+    }
+
 }
 
 public enum CraftingStep
 {
-    Idle,
+    Waiting,
     Smelting,
     Forging,
     Quenching,

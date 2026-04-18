@@ -86,30 +86,24 @@ public class OrderManager : MonoBehaviour
 
     public void CraftWeapon()
     {
-        if (currentCustomerOrder == null)
-        {
-            Debug.Log("No current customer order to evaluate.");
-            return;
-        }
+        if (currentCustomerOrder == null) return;
 
         ItemData requiredOre = GetSelectedOreData();
         ItemData requiredElement = GetSelectedElementData();
 
-        PlayerInventory inventory = FindAnyObjectByType<PlayerInventory>();
-        if (inventory == null)
-        {
-            Debug.Log("Player inventory not found. Cannot evaluate craft.");
-            return;
-        }
+        if (InventoryManager.Instance == null) return;
 
-        bool hasOre = inventory.supplyPouch.ContainsKey(requiredOre) && inventory.supplyPouch[requiredOre] >= 1;
-        bool hasElement = inventory.supplyPouch.ContainsKey(requiredElement) && inventory.supplyPouch[requiredElement] >= 1;
+        int oreCount = InventoryManager.Instance.GetPouchAmount(requiredOre);
+        int elementCount = InventoryManager.Instance.GetPouchAmount(requiredElement);
 
-        if (hasOre && hasElement)
+        if (oreCount >= 1 && elementCount >= 1)
         {
-            inventory.RemoveSupply(requiredOre, 1);
-            inventory.RemoveSupply(requiredElement, 1);
-            Debug.Log($"Removed 1 {requiredOre.itemName} and 1 {requiredElement.itemName} from inventory.");
+            InventoryManager.Instance.RemoveFromPouch(requiredOre, 1);
+            InventoryManager.Instance.RemoveFromPouch(requiredElement, 1);
+            Debug.Log($"Removed 1 {requiredOre.itemName} and 1 {requiredElement.itemName}");
+
+            PlayerInventory inventoryUI = FindAnyObjectByType<PlayerInventory>();
+            if (inventoryUI != null) inventoryUI.UpdateSupplyUI();
 
             CraftedWeapon craftedWeapon = new CraftedWeapon(selectedWeapon, selectedWeaponElement);
             EvaluateCraft(craftedWeapon);
@@ -117,10 +111,9 @@ public class OrderManager : MonoBehaviour
             hasSelectedOreType = false;
             hasSelectedWeapon = false;
             hasSelectedWeaponElement = false;
-            
+
             HideWeaponSelectMenu();
             SmithingManager.Instance.StartSmithing();
-            
         }
         else
         {

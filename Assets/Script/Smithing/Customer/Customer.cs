@@ -13,36 +13,116 @@ public class Customer : MonoBehaviour
     [Header("Customer Data")]
     [SerializeField] private CustomerOrderSO customerSO;
 
+    [Header("Movement Settings")]
+    [SerializeField] private float moveSpeed = 5f;
+    
     private bool isDialogPlaying = false;
+    private Transform targetWaypoint;
+    private Transform targetExitPoint;
+    private bool isMoving = false;
+
+    private bool hasOrdered = false;
 
     private void Start()
     {
+        targetExitPoint = CustomerManager.Instance.GetExitPoint();
         textBubble.SetActive(false);
         nameContainer.SetActive(false);
     }
 
     private void Update()
     {
-        if(isDialogPlaying)
+        HandleMovement();
+        HandleInteraction();
+    }
+
+    private void HandleMovement()
+    {
+        if (isMoving && targetWaypoint != null)
         {
-            if(Input.GetKeyDown(KeyCode.E) && SmithingManager.Instance.IsCurrentStep(CraftingStep.Idle))
+            transform.position = Vector3.MoveTowards(transform.position, targetWaypoint.position, moveSpeed * Time.deltaTime);
+
+            if (Vector3.Distance(transform.position, targetWaypoint.position) < 0.1f)
             {
-                textBubble.SetActive(false);
-                nameContainer.SetActive(false);
-                OrderManager.Instance.ShowWeaponSelectMenu();
+                isMoving = false;
             }
+
         }
 
         if (SmithingManager.Instance.IsCurrentStep(CraftingStep.Delivering))
         {
-            if (dialogText != null && customerSO != null)
+            if(Vector3.Distance(transform.position, targetExitPoint.position) < 0.1f)
             {
-                dialogText.text = customerSO.goodFinish;
-            }
-            if(Input.GetKeyDown(KeyCode.E))
-            {
+                isMoving = false;
+                CustomerManager.Instance.OnCustomerLeft();
                 SmithingManager.Instance.CompleteCurrentStep(0);
+                Destroy(gameObject);
             }
+        }
+    }
+
+    private void HandleInteraction()
+    {
+        
+        if (!isMoving && SmithingManager.Instance.IsCurrentStep(CraftingStep.Waiting))
+        {
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                if (!hasOrdered)
+                {
+                    SayHello();
+                }   
+                if (hasOrdered)
+                {
+                    OrderManager.Instance.currentCustomerOrder = customerSO;
+                    OrderManager.Instance.ShowWeaponSelectMenu();
+                }
+                hasOrdered = true;
+            }
+        }
+
+        if (!SmithingManager.Instance.IsCurrentStep(CraftingStep.Waiting))
+        {
+            textBubble.SetActive(false);
+            nameContainer.SetActive(false);
+        }
+        
+        if (SmithingManager.Instance.IsCurrentStep(CraftingStep.Delivering))
+        {
+            if (dialogText != null) 
+            {
+                if (SmithingManager.Instance.GetTotalScore() > 200f) { dialogText.text = customerSO.goodFinish; }
+                else if (SmithingManager.Instance.GetTotalScore() > 100f) { dialogText.text = customerSO.okayFinish; }
+                else if (SmithingManager.Instance.GetTotalScore() <= 100f) { dialogText.text = customerSO.badFinish; }
+                
+            }
+            textBubble.SetActive(true);
+            nameContainer.SetActive(true);
+            
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                LeaveShop();
+            }
+        }        
+    }
+
+    public void GoToCounter(Transform counterTransform)
+    {
+        targetWaypoint = counterTransform;
+        transform.LookAt(new Vector3(targetWaypoint.position.x, transform.position.y, targetWaypoint.position.z));
+        isMoving = true;
+    }
+
+    private void LeaveShop()
+    {
+        textBubble.SetActive(false);
+        nameContainer.SetActive(false);
+
+        if (CustomerManager.Instance != null)
+        {
+            targetWaypoint = CustomerManager.Instance.GetExitPoint();
+            transform.LookAt(new Vector3(targetWaypoint.position.x, transform.position.y, targetWaypoint.position.z));
+            isMoving = true;
         }
     }
 
@@ -51,6 +131,7 @@ public class Customer : MonoBehaviour
         Debug.Log("Hello, It's you, The purest you");
         PlayDialog();
     }
+
 
     private void PlayDialog()
     {

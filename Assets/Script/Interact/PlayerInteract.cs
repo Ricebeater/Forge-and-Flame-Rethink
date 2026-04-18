@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerInteract : MonoBehaviour
 {
@@ -16,9 +17,10 @@ public class PlayerInteract : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            Interact();
+            //Interact();
             //OrderManager.Instance.ShowWeaponSelectMenu();
         }
+
     }
 
     private void Interact()

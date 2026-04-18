@@ -10,8 +10,19 @@ public class PickUpItem : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         WorldItem worldItem = other.GetComponent<WorldItem>();
+
         if (worldItem == null)
             return;
+
+        if (worldItem.itemData.itemType == ItemData.ItemType.material)
+        {
+            if (InventoryManager.Instance != null)
+            {
+                InventoryManager.Instance.huntBag.Add(worldItem.itemData);
+                Debug.Log($"Collected {worldItem.itemData.itemName} into Hunt Bag.");
+                Destroy(other.gameObject);
+            }
+        }
 
         if (AddItemToInventory(worldItem.itemData))
         {

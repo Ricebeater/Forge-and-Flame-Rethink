@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : Player
@@ -78,6 +79,7 @@ public class PlayerController : Player
         {
             //LockCursor();
             //ShowInventoryUI();
+            
         }
     }
 
