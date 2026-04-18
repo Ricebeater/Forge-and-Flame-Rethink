@@ -219,10 +219,11 @@ GameObject:
   - component: {fileID: 1618025624351369152}
   - component: {fileID: 5848706055731175481}
   - component: {fileID: 5351595542857129509}
-  - component: {fileID: -5633187252564797076}
-  - component: {fileID: 4068475850984679157}
+  - component: {fileID: 4876893350923825607}
+  - component: {fileID: -4092743192090539531}
+  - component: {fileID: 6231550649388213331}
   m_Layer: 0
-  m_Name: BOSS
+  m_Name: Mammoth
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -317,7 +318,7 @@ NavMeshAgent:
   m_BaseOffset: 0.06
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &-5633187252564797076
+--- !u!114 &4876893350923825607
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -329,8 +330,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 734c96a5a99687f44a8aebe0bf9ee55d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAI
-  enemy: {fileID: 4068475850984679157}
---- !u!114 &4068475850984679157
+  enemy: {fileID: -4092743192090539531}
+--- !u!114 &-4092743192090539531
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -339,9 +340,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 3252229227927214002}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3584640dc4bd6f844b469a704043ced2, type: 3}
+  m_Script: {fileID: 11500000, guid: fb614ac1c041e87498e092e5c2270f13, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BossEnemy
+  m_EditorClassIdentifier: Assembly-CSharp::BigEnemy
   entityName: 
   maxHP: 100
   currentHP: 0
@@ -354,48 +355,127 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   agent: {fileID: 0}
-  attackSounds:
-    clips:
-    - {fileID: 8300000, guid: d62e992b196fb1d4087d41ad9798b379, type: 3}
-    volume: 1
-  hurtSound:
-    clips:
-    - {fileID: 8300000, guid: 1a7f96dcf219e1048b110459aebfc797, type: 3}
-    - {fileID: 8300000, guid: a3c4aa68956aff14a985d9fe9ff19c8b, type: 3}
-    volume: 1
-  dieSound:
-    clips:
-    - {fileID: 8300000, guid: 9b29ee58c82af56438a869cd10897aa4, type: 3}
-    volume: 1
-  walkBobSpeed: 10
-  walkBobAmount: 0.1
-  walkSwayAmount: 5
-  chaseRange: 8
-  patrolRadius: 5
-  minWaitTime: 1
-  maxWaitTime: 3
-  patrolSpeed: 2
-  chaseSpeed: 3
-  attackRange: 0.5
-  attackCooldown: 1.5
+  profile: {fileID: 11400000, guid: a52d541dd97acd5488d243b52ec8fac4, type: 2}
+  animSettings:
+    walkBobSpeed: 10
+    walkBobAmount: 0.1
+    walkSwayAmount: 5
+  audioSettings:
+    attackSounds:
+      clips:
+      - {fileID: 8300000, guid: 22a8762ca18bc2e40aa57fdfeebcd040, type: 3}
+      volume: 1
+    hurtSound:
+      clips:
+      - {fileID: 8300000, guid: a3c4aa68956aff14a985d9fe9ff19c8b, type: 3}
+      volume: 1
+    dieSound:
+      clips:
+      - {fileID: 8300000, guid: 9b29ee58c82af56438a869cd10897aa4, type: 3}
+      volume: 1
+    footstepSounds:
+    - {fileID: 8300000, guid: 3d4c5cdccbead7d4982595ed06240e05, type: 3}
+    - {fileID: 8300000, guid: 7c0dd1b3cda34704ebeec819c41b552c, type: 3}
+    - {fileID: 8300000, guid: 18e1d616fe08af742a359a0f4338c507, type: 3}
+    footstepVolume: 0.4
   lootTable: []
-  skillEffect: {fileID: 507136421729868517, guid: eb9e9438ab307ef4ba46c9e1727337ff, type: 3}
-  attackIndicatorPrefab: {fileID: 488451184704202184, guid: b8938e90f555a0740b6fd8b6075228f1, type: 3}
-  bossChargeSound:
-    clips:
-    - {fileID: 8300000, guid: 36f3bd88afe5b914f900cc1b51659ca9, type: 3}
-    volume: 1
-  bossExplosionSound:
-    clips:
-    - {fileID: 8300000, guid: ce45b64fe989fd54b99165d526cf7f4f, type: 3}
-    volume: 1
-  bossChargeTime: 2
-  bossAttackRadius: 3
-  bossSkillCooldown: 5
-  targetLayer:
+--- !u!82 &6231550649388213331
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3252229227927214002}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 5
+  Pan2D: 0
+  rolloffMode: 1
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
     serializedVersion: 2
-    m_Bits: 128
-  lastBossSkillTime: -999
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &3429986288919598872
 GameObject:
   m_ObjectHideFlags: 0

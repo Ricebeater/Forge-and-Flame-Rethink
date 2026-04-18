@@ -17,10 +17,6 @@ public class BossEnemy : Enemy
     protected override void Awake()
     {
         base.Awake();
-        maxHP = 50;
-        damage = 5;
-        patrolSpeed = 0f;
-        chaseSpeed = 4f;
     }
 
     protected override void Die()

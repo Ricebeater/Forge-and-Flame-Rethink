@@ -779,6 +779,7 @@ GameObject:
   - component: {fileID: 505625149}
   - component: {fileID: 505625148}
   - component: {fileID: 505625147}
+  - component: {fileID: 505625152}
   m_Layer: 0
   m_Name: Gate
   m_TagString: Untagged
@@ -891,6 +892,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!208 &505625152
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 505625146}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &642198610
 GameObject:
   m_ObjectHideFlags: 0
@@ -903,6 +920,7 @@ GameObject:
   - component: {fileID: 642198614}
   - component: {fileID: 642198613}
   - component: {fileID: 642198612}
+  - component: {fileID: 642198615}
   m_Layer: 6
   m_Name: Boarder (1)
   m_TagString: Untagged
@@ -919,8 +937,8 @@ Transform:
   m_GameObject: {fileID: 642198610}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 29.79, y: 3.11, z: 4.33}
-  m_LocalScale: {x: 73.77288, y: 7.8943, z: 4.189505}
+  m_LocalPosition: {x: 29.79, y: 3.11, z: 3.42}
+  m_LocalScale: {x: 73.77288, y: 7.8943, z: 6.822609}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 795034472}
@@ -1002,6 +1020,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 642198610}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!208 &642198615
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 642198610}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &701615732
 GameObject:
   m_ObjectHideFlags: 0
@@ -1014,6 +1048,7 @@ GameObject:
   - component: {fileID: 701615736}
   - component: {fileID: 701615735}
   - component: {fileID: 701615734}
+  - component: {fileID: 701615737}
   m_Layer: 6
   m_Name: Boarder
   m_TagString: Untagged
@@ -1030,8 +1065,8 @@ Transform:
   m_GameObject: {fileID: 701615732}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 29.79, y: 3.11, z: 54.74}
-  m_LocalScale: {x: 73.77288, y: 7.8943, z: 4.189505}
+  m_LocalPosition: {x: 29.79, y: 3.11, z: 56.82}
+  m_LocalScale: {x: 73.77288, y: 7.8943, z: 8.12}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 795034472}
@@ -1113,6 +1148,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 701615732}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!208 &701615737
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 701615732}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &795034469
 GameObject:
   m_ObjectHideFlags: 0
@@ -1613,6 +1664,7 @@ GameObject:
   - component: {fileID: 936489094}
   - component: {fileID: 936489093}
   - component: {fileID: 936489092}
+  - component: {fileID: 936489095}
   m_Layer: 6
   m_Name: Boarder (3)
   m_TagString: Untagged
@@ -1629,8 +1681,8 @@ Transform:
   m_GameObject: {fileID: 936489090}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.70710677, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 4.287, y: 3.11, z: 28.6}
-  m_LocalScale: {x: 73.77288, y: 7.8943, z: 4.189505}
+  m_LocalPosition: {x: 4.11, y: 3.11, z: 28.6}
+  m_LocalScale: {x: 73.77288, y: 7.8943, z: 5.2008514}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 795034472}
@@ -1712,6 +1764,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 936489090}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!208 &936489095
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 936489090}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &944801885
 GameObject:
   m_ObjectHideFlags: 0
@@ -2782,6 +2850,7 @@ GameObject:
   - component: {fileID: 1560031104}
   - component: {fileID: 1560031103}
   - component: {fileID: 1560031102}
+  - component: {fileID: 1560031105}
   m_Layer: 6
   m_Name: Boarder (2)
   m_TagString: Untagged
@@ -2798,8 +2867,8 @@ Transform:
   m_GameObject: {fileID: 1560031100}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.70710677, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 56.49, y: 3.11, z: 28.6}
-  m_LocalScale: {x: 73.77288, y: 7.8943, z: 4.189505}
+  m_LocalPosition: {x: 56.97, y: 3.11, z: 28.6}
+  m_LocalScale: {x: 73.77288, y: 7.8943, z: 5.8}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 795034472}
@@ -2881,6 +2950,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1560031100}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!208 &1560031105
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1560031100}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &1563195894
 GameObject:
   m_ObjectHideFlags: 0
@@ -3023,34 +3108,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1590902749}
-  - component: {fileID: 1590902748}
-  - component: {fileID: 1590902750}
   m_Layer: 0
-  m_Name: SpawningPos Test
+  m_Name: SpawningPosCenter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1590902748
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1590902747}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 605e753d4ef916e47988c15acacfecc1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AreaSpawner
-  enemyPrefab: {fileID: 3252229227927214002, guid: 9e9d11abb27fd984aafc9cf12da8e8ae, type: 3}
-  maxEnemies: 5
-  initialDelay: 1
-  spawnInterval: 3
-  isActive: 1
-  spawnCenter: {fileID: 1590902749}
-  areaRadius: 10
 --- !u!4 &1590902749
 Transform:
   m_ObjectHideFlags: 0
@@ -3066,25 +3130,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1829908146}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1590902750
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1590902747}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 605e753d4ef916e47988c15acacfecc1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AreaSpawner
-  enemyPrefab: {fileID: 5738472655128574116, guid: 45128c75c4150a44d96bd51a8086c808, type: 3}
-  maxEnemies: 5
-  initialDelay: 1
-  spawnInterval: 3
-  isActive: 1
-  spawnCenter: {fileID: 1590902749}
-  areaRadius: 10
 --- !u!1 &1695233411
 GameObject:
   m_ObjectHideFlags: 0
@@ -3884,7 +3929,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1829908146}
   - component: {fileID: 1829908148}
-  - component: {fileID: 1829908147}
+  - component: {fileID: 1829908149}
   m_Layer: 0
   m_Name: SpawnManager
   m_TagString: Untagged
@@ -3908,26 +3953,6 @@ Transform:
   - {fileID: 1590902749}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1829908147
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1829908145}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba7874bda8d29684fa11ddfb8180d104, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AroundSpawner
-  enemyPrefab: {fileID: 5738472655128574116, guid: 7100c06bbd8e440428c489b0c3b25104, type: 3}
-  maxEnemies: 5
-  initialDelay: 1
-  spawnInterval: 0.5
-  isActive: 1
-  target: {fileID: 1049878860}
-  spawnRadius: 5
-  minSpawnDistance: 2
 --- !u!114 &1829908148
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3942,13 +3967,40 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpawnManager
   player: {fileID: 1049878860}
   timerText: {fileID: 1788538352}
+  gatheringTime: 60
   ambientMusic: {fileID: 8300000, guid: 47d3b080ed9c2a94088d4fa972eded07, type: 3}
   ambientVolume: 0.5
-  bossMusic: {fileID: 8300000, guid: 2c590ec9df1c0f74b92d3f22fa635e7d, type: 3}
-  bossVolume: 0.8
-  timeUntilBoss: 60
-  finalBossPrefab: {fileID: 3252229227927214002, guid: b1209d456e7459f4bbb975c65143f011, type: 3}
-  bossSpawnDelay: 5
+--- !u!114 &1829908149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1829908145}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 605e753d4ef916e47988c15acacfecc1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AreaSpawner
+  maxEnemies: 50
+  initialDelay: 1
+  spawnInterval: 0.5
+  isActive: 1
+  enemyPool:
+  - enemyName: 
+    prefab: {fileID: 5738472655128574116, guid: 7100c06bbd8e440428c489b0c3b25104, type: 3}
+    weight: 4
+  - enemyName: 
+    prefab: {fileID: 3252229227927214002, guid: 9e9d11abb27fd984aafc9cf12da8e8ae, type: 3}
+    weight: 3
+  - enemyName: 
+    prefab: {fileID: 5738472655128574116, guid: 45128c75c4150a44d96bd51a8086c808, type: 3}
+    weight: 2
+  - enemyName: 
+    prefab: {fileID: 3252229227927214002, guid: b1209d456e7459f4bbb975c65143f011, type: 3}
+    weight: 1
+  spawnCenter: {fileID: 1590902749}
+  areaRadius: 20
 --- !u!223 &1948163859 stripped
 Canvas:
   m_CorrespondingSourceObject: {fileID: 4811450843503552827, guid: 9af9189119a5b06418169ae890cb126b, type: 3}
@@ -4441,6 +4493,10 @@ PrefabInstance:
     - target: {fileID: 3411379521368094048, guid: f46411d014463e94d9310ecd44af516a, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 4080487041421547646, guid: f46411d014463e94d9310ecd44af516a, type: 3}
+      propertyPath: damage
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4080487041421547646, guid: f46411d014463e94d9310ecd44af516a, type: 3}
       propertyPath: inventoryUI

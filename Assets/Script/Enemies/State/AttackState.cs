@@ -15,7 +15,6 @@ public class AttackState : EnemyBaseState
     {
         if (ai.enemy.player == null) return;
 
-
         Vector3 targetPosition = new Vector3(
             ai.enemy.player.position.x,
             ai.transform.position.y,
@@ -24,14 +23,14 @@ public class AttackState : EnemyBaseState
 
         ai.transform.LookAt(targetPosition);
 
-        if (Vector3.Distance(ai.transform.position, ai.enemy.player.position) > ai.enemy.attackRange)
+        if (Vector3.Distance(ai.transform.position, ai.enemy.player.position) > ai.enemy.profile.attackRange)
         {
             ai.ChangeState(ai.chaseState);
             return;
         }
 
         attackTimer += Time.deltaTime;
-        if (attackTimer >= ai.enemy.attackCooldown)
+        if (attackTimer >= ai.enemy.profile.attackCooldown)
         {
             attackTimer = 0f;
             PerformAttack(ai);

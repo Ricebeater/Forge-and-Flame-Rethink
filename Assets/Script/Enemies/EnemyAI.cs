@@ -13,33 +13,15 @@ public class EnemyAI : MonoBehaviour
     public readonly BossChargeAttackState bossAttackState = new BossChargeAttackState();
     public readonly FleeState fleeState = new FleeState();
 
-    private void Reset()
-    {
-        enemy = GetComponent<Enemy>();
-    }
+    public readonly IdleState idleState = new IdleState();
 
-    void Awake()
-    {
-        if (enemy == null)
-        {
-            enemy = GetComponent<Enemy>();
-        }
-    }
+    private void Reset() { enemy = GetComponent<Enemy>(); }
+    void Awake() { if (enemy == null) enemy = GetComponent<Enemy>(); }
 
     void Start()
     {
         enemy = GetComponent<Enemy>();
-        if (enemy == null)
-        {
-            Debug.LogError($"[EnemyAI] {name}: Critical Error! Not found Script 'Enemy' Stop working");
-            this.enabled = false;
-            return;
-        }
-
-        if (enemy.agent == null)
-        {
-            enemy.agent = GetComponent<NavMeshAgent>();
-        }
+        if (enemy == null || enemy.agent == null) return;
 
         if (enemy is BossEnemy)
         {
@@ -47,26 +29,35 @@ public class EnemyAI : MonoBehaviour
         }
         else
         {
-            ChangeState(patrolState);
+            ChangeStateByOption(enemy.profile.startingState);
         }
     }
 
-    void Update()
-    {
-        if (currentState != null)
-        {
-            currentState.UpdateState(this);
-        }
-    }
+    void Update() { if (currentState != null) currentState.UpdateState(this); }
 
     public void ChangeState(EnemyBaseState newState)
     {
-        if (currentState != null)
-        {
-            currentState.ExitState(this);
-        }
+        if (currentState != null) currentState.ExitState(this);
         currentState = newState;
         currentState.EnterState(this);
+    }
+
+    public void ChangeStateByOption(AIStateOption option)
+    {
+        switch (option)
+        {
+            case AIStateOption.Idle: ChangeState(idleState); break;
+            case AIStateOption.Patrol: ChangeState(patrolState); break;
+            case AIStateOption.Chase: ChangeState(chaseState); break;
+            case AIStateOption.Flee: ChangeState(fleeState); break;
+            default: ChangeState(idleState); break;
+        }
+    }
+
+    public void StartFleeing()
+    {
+        if (enemy is BossEnemy) { Destroy(gameObject); return; }
+        ChangeState(fleeState);
     }
 
     public bool RandomPoint(Vector3 center, float range, out Vector3 result)
@@ -80,15 +71,5 @@ public class EnemyAI : MonoBehaviour
         }
         result = Vector3.zero;
         return false;
-    }
-    public void StartFleeing()
-    {
-        if (enemy is BossEnemy)
-        {
-            Destroy(gameObject);
-            return;
-        }
-
-        ChangeState(fleeState);
     }
 }

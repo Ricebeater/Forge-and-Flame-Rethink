@@ -10,11 +10,6 @@ public class RangedEnemy : Enemy
     protected override void Awake()
     {
         base.Awake();
-        maxHP = 2;
-        damage = 1;
-        patrolSpeed = 0f;
-        chaseSpeed = 0f;
-        if (agent != null) agent.speed = 0f;
     }
 
     public override void PerformAttack()

@@ -3,6 +3,7 @@ using UnityEngine;
 public class BillboardCam : MonoBehaviour
 {
     public Camera mainCamera;
+
     void Start()
     {
         if (mainCamera == null)
@@ -13,6 +14,9 @@ public class BillboardCam : MonoBehaviour
 
     void Update()
     {
-        transform.forward = mainCamera.transform.forward;
+        if (mainCamera != null)
+        {
+            transform.forward = mainCamera.transform.forward;
+        }
     }
 }

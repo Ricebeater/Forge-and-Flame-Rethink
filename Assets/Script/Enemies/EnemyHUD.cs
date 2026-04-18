@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class EnemyHUD : MonoBehaviour
@@ -33,6 +33,11 @@ public class EnemyHUD : MonoBehaviour
     {
         if (enemyStats == null) return;
 
+        if (slider.maxValue != enemyStats.maxHP)
+        {
+            slider.maxValue = enemyStats.maxHP;
+        }
+
         slider.value = enemyStats.currentHP;
 
         if (hideWhenFull)
@@ -43,6 +48,9 @@ public class EnemyHUD : MonoBehaviour
                 slider.gameObject.SetActive(true);
         }
 
-        transform.LookAt(transform.position + mainCam.transform.forward);
+        if (mainCam != null)
+        {
+            transform.LookAt(transform.position + mainCam.transform.forward);
+        }
     }
 }
