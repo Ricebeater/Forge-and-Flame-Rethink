@@ -17,7 +17,7 @@ public class PlayerInteract : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E))
         {
             Interact();
-            OrderManager.Instance.ShowWeaponSelectMenu();
+            //OrderManager.Instance.ShowWeaponSelectMenu();
         }
     }
 

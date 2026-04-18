@@ -55,8 +55,12 @@ public class SmithingManager : MonoBehaviour
 
             case CraftingStep.Quenching:
                 quenchingScore = stepScore;
-                currentCraftingStep = CraftingStep.Idle;
+                currentCraftingStep = CraftingStep.Delivering;
                 FinalSmithingScore();
+                break;
+
+            case CraftingStep.Delivering:
+                currentCraftingStep = CraftingStep.Idle;
                 break;
         }
     }
@@ -75,6 +79,12 @@ public class SmithingManager : MonoBehaviour
         totalScore = smeltingScore + forgingScore + quenchingScore;
         Debug.Log($"Final Smithing Score: {totalScore}");
 
+        MoneyManager.Instance.AddMoney((int)totalScore);
+    }
+
+    public bool IsCurrentStep(CraftingStep step)
+    {
+        return currentCraftingStep == step;
     }
 
 }
@@ -84,5 +94,6 @@ public enum CraftingStep
     Idle,
     Smelting,
     Forging,
-    Quenching
+    Quenching,
+    Delivering
 }
