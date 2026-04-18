@@ -16,5 +16,8 @@ MonoBehaviour:
   potrait: {fileID: 21300000, guid: 93db4094e615a984b8b371b2ba832dd0, type: 3}
   orderDescription: "I need something that can pirece through\n a thick scale of
     a fire lizard"
+  goodFinish: This is perfect!
+  okayFinish: This could do the job.
+  badFinish: What is this? a back scratcher!?!
   wantedWeapon: 2
   wantedElement: 1
