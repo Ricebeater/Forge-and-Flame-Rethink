@@ -169,7 +169,7 @@ public class OrderManager : MonoBehaviour
         }
     }
 
-    private ItemData GetSelectedOreData()
+    public ItemData GetSelectedOreData()
     {
         switch (selectedOreType)
         {
@@ -180,7 +180,7 @@ public class OrderManager : MonoBehaviour
         }
     }
 
-    private ItemData GetSelectedElementData()
+    public ItemData GetSelectedElementData()
     {
         switch (selectedWeaponElement)
         {

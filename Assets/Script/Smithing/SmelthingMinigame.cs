@@ -15,12 +15,14 @@ public class SmelthingMinigame : MinigameBase
     [SerializeField] private Image[] arrowDisplays;
     [SerializeField] private Slider timerSlider;
 
-    [Header("Arrow Sprites")]
+    [Header("UI Sprites")]
     [SerializeField] private Sprite upArrowSprite;
     [SerializeField] private Sprite downArrowSprite;
     [SerializeField] private Sprite leftArrowSprite;
     [SerializeField] private Sprite rightArrowSprite;
-
+    [SerializeField]private Image oreImage;
+    [SerializeField]private Image gemImage;
+    
     private List<KeyCode> currentSequence = new List<KeyCode>();
     private int currentInputIndex = 0;
     private int roundsWon = 0;
@@ -32,6 +34,8 @@ public class SmelthingMinigame : MinigameBase
     public override void StartGame()
     {
         base.StartGame();
+
+        SetCraftingMaterialUI();
 
         score = 0;
         currentRound = 0;
@@ -176,6 +180,15 @@ public class SmelthingMinigame : MinigameBase
         {
             StartNewRound();
         }
+    }
+
+    private void SetCraftingMaterialUI()
+    {
+        ItemData oreData = OrderManager.Instance.GetSelectedOreData();
+        ItemData gemData = OrderManager.Instance.GetSelectedElementData();
+
+        oreImage.sprite = oreData.icon;
+        gemImage.sprite = gemData.icon;
     }
 
     public int GetSmeltScore()

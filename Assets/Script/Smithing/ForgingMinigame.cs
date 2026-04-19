@@ -13,6 +13,15 @@ public class ForgingMinigame : MinigameBase
     [Header("Minigame UI")]
     [SerializeField] private RectTransform needleTransform;
     [SerializeField] private RectTransform targetZoneTransform;
+    [SerializeField] private GameObject endGameButton;
+    [SerializeField] private Slider progressBar;
+
+    [Header("Animation")]
+    [SerializeField] private Animator anim;
+    [SerializeField] private Transform popUpPos;
+    [SerializeField] private GameObject perfectHitFX;
+    [SerializeField] private GameObject goodHitFX;
+    [SerializeField] private GameObject missHitFX;
 
     [Header("Debug")]
     [SerializeField] private TextMeshProUGUI currentA;
@@ -34,10 +43,13 @@ public class ForgingMinigame : MinigameBase
     public override void StartGame()
     {
         base.StartGame();
+        
         score = 0;
         currentRound = 0;
         currentFails = 0;
         needleDirection = 1;
+
+        if (endGameButton != null) { endGameButton.SetActive(false); }
 
         StartNewRound();
     }
@@ -73,12 +85,15 @@ public class ForgingMinigame : MinigameBase
         MoveNeedle();
         HandleInput();
 
+        UpdateProgressBarUI();
+
         AngleDebug();
     }
 
     private void MoveNeedle()
     {
         if (isPaused) { return; }
+        if (currentRound >= maxRounds) { return; }
 
         currentAngle += RotationSpeed * needleDirection * Time.deltaTime;
 
@@ -101,14 +116,19 @@ public class ForgingMinigame : MinigameBase
     {
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
         {
-            CheckHit();
+            if (currentRound < maxRounds)
+            {
+                CheckHit();
+            }
         }
     }
 
     private void CheckHit()
     {
+        PlayHammerAnimation();
         if (IsAngleInZone(currentAngle, perfectAngleMin, perfectAngleMax))
         {
+            PopUpAnimation(2);
             Debug.Log("PERFECT Strike!");
             score += 34;
             currentRound++;
@@ -117,6 +137,7 @@ public class ForgingMinigame : MinigameBase
         
         else if (IsAngleInZone(currentAngle, successAngleMin, successAngleMax))
         {
+            PopUpAnimation(1);
             Debug.Log("Good Strike.");
             score += 20;
             currentRound++;
@@ -125,13 +146,14 @@ public class ForgingMinigame : MinigameBase
 
         else
         {
+            PopUpAnimation(0);
             Debug.Log("Missed!");
             currentFails++;
 
             if (currentFails >= maxFails)
             {
                 Debug.Log("Weapon Ruined! Forging Failed.");
-                EndGame();
+                endGameButton.SetActive(true); //EndGame();
                 return;
             }
         }
@@ -140,7 +162,7 @@ public class ForgingMinigame : MinigameBase
         {
             score = Mathf.Clamp(score, 0, 100);
             Debug.Log($"Forging Complete! Final Score: {score}");
-            EndGame();
+            endGameButton.SetActive(true); //EndGame();
         }
     }
 
@@ -165,6 +187,44 @@ public class ForgingMinigame : MinigameBase
         SMin.text = $"Success Min: {successAngleMin:F1}";
         PMax.text = $"Perfect Max: {perfectAngleMax:F1}";
         PMin.text = $"Perfect Min: {perfectAngleMin:F1}";
+    }
+
+    public override void EndGame()
+    {
+        base.EndGame();
+    }
+
+    #region Animation
+
+    private void PlayHammerAnimation()
+    {
+        anim.Play("Hammering", 0, 0f);
+    }
+
+    private void PopUpAnimation(int index)
+    {
+        if (index == 0)
+        {
+            GameObject popUp = Instantiate(missHitFX, popUpPos, false);
+        }
+        else if(index == 1)
+        {
+            GameObject popUp = Instantiate(goodHitFX, popUpPos, false);
+        }
+        else
+        {
+            GameObject popUp = Instantiate(perfectHitFX, popUpPos, false);
+        }
+        
+    }
+
+    #endregion
+
+    private void UpdateProgressBarUI()
+    {
+        if (progressBar == null) { return; }
+        progressBar.maxValue = maxRounds;
+        progressBar.value = currentRound;
     }
 
     // Dramatic pause
