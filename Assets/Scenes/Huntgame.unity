@@ -137,7 +137,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!64 &59053165
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -167,7 +167,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 59053164}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -4168,7 +4168,7 @@ MonoBehaviour:
   player: {fileID: 1049878860}
   timerText: {fileID: 0}
   clockSlider: {fileID: 2063659688}
-  gatheringTime: 3
+  gatheringTime: 60
   ambientMusic: {fileID: 8300000, guid: 47d3b080ed9c2a94088d4fa972eded07, type: 3}
   ambientVolume: 0.5
 --- !u!114 &1829908149
@@ -4907,7 +4907,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4080487041421547646, guid: f46411d014463e94d9310ecd44af516a, type: 3}
       propertyPath: maxHP
-      value: 4
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 4080487041421547646, guid: f46411d014463e94d9310ecd44af516a, type: 3}
       propertyPath: damage
