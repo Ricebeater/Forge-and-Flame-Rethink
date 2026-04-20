@@ -1,13 +1,17 @@
+using System.Collections;
+using Unity.Hierarchy;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CustomerManager : MonoBehaviour
 {
     public static CustomerManager Instance { get; private set; }
     
-
     [Header("Daily Setting")]
     [SerializeField] private int maxCustomersPerDay = 3;
-    private int customerSpawnedToday = 0;
+    public int customerSpawnedToday = 0;
+    public bool isDayEnd = false;
+    public float totalMoneyEarnToday = 0;
 
     [Header("Customer Spawner")]
     [SerializeField] private float moveSpeed = 2f;
@@ -16,6 +20,11 @@ public class CustomerManager : MonoBehaviour
     [SerializeField] private Transform exitPos;  
     [SerializeField] private GameObject[] customerList;
 
+    [SerializeField] private GameObject transitionIn;
+    [SerializeField] private GameObject transitionOut;
+    [SerializeField] private Transform transitionPos;
+
+    
     private GameObject currentCustomer;
 
     private void Awake()
@@ -23,7 +32,6 @@ public class CustomerManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -33,11 +41,15 @@ public class CustomerManager : MonoBehaviour
 
     private void Start()
     {
+        StartCoroutine(TransitionIn());
         StartNewDay();
     }
 
     public void StartNewDay()
     {
+        isDayEnd = false;
+        MoneyManager.Instance.currentDay++;
+        totalMoneyEarnToday = 0;
         customerSpawnedToday = 0;
         SpawnNextCustomer();
         Debug.Log("A new day has started! Customers are ready to arrive.");
@@ -45,8 +57,9 @@ public class CustomerManager : MonoBehaviour
 
     public void SpawnNextCustomer()
     {
-        if(customerSpawnedToday >= maxCustomersPerDay)
+        if(customerSpawnedToday >= maxCustomersPerDay )
         {
+            EndDay();
             Debug.Log("Maximum customers for today reached!");
             return;
         }
@@ -70,6 +83,16 @@ public class CustomerManager : MonoBehaviour
         customerSpawnedToday++;
     }
 
+    public float GetTotalMoneyEarnToday()
+    {
+        return totalMoneyEarnToday;
+    }
+
+    private void EndDay()
+    {
+        isDayEnd = true;
+    }
+
     public void OnCustomerLeft()
     {
         Invoke("SpawnNextCustomer", 2f);
@@ -78,5 +101,15 @@ public class CustomerManager : MonoBehaviour
     public Transform GetExitPoint()
     {
         return exitPos;
+    }
+
+    private IEnumerator TransitionIn()
+    {
+        if(transitionIn != null)
+        {
+            GameObject transIn = Instantiate(transitionIn, transitionPos, false);
+        }
+
+        yield return new WaitForSecondsRealtime(2f);
     }
 }

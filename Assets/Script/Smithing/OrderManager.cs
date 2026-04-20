@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class OrderManager : MonoBehaviour
 {
@@ -14,6 +15,14 @@ public class OrderManager : MonoBehaviour
 
     [Header("UI element")]
     public CanvasGroup weaponSelectCanvas;
+    public Image swordMatDisplay;
+    public Image swordAuraDisplay;
+    public Color ironColor;
+    public Color silverColor;
+    public Color GoldColor;
+    public Color fireColor;
+    public Color waterColor;
+    public Color plantColor;
 
     [Header("Supplies Data")]
     public ItemData redGemData;
@@ -95,6 +104,8 @@ public class OrderManager : MonoBehaviour
 
         int oreCount = InventoryManager.Instance.GetPouchAmount(requiredOre);
         int elementCount = InventoryManager.Instance.GetPouchAmount(requiredElement);
+
+        SetUpSwordDisplayUI();
 
         if (oreCount >= 1 && elementCount >= 1)
         {
@@ -188,6 +199,26 @@ public class OrderManager : MonoBehaviour
             case WeaponElement.Water: return blueGemData;
             case WeaponElement.Plant: return enchantedWoodData;
             default: return null;
+        }
+    }
+
+    public void SetUpSwordDisplayUI()
+    {
+        if (swordMatDisplay == null) { return; }
+        if (swordAuraDisplay == null) { return; }
+
+        switch (selectedWeaponElement)
+        {
+            case WeaponElement.Fire:    swordAuraDisplay.color = fireColor; break;
+            case WeaponElement.Water:   swordAuraDisplay.color = waterColor; break;
+            case WeaponElement.Plant:   swordAuraDisplay.color = plantColor; break;
+        }
+
+        switch (selectedOreType)
+        {
+            case OreType.Iron:      swordMatDisplay.color = ironColor; break;
+            case OreType.Silver:    swordMatDisplay.color = silverColor; break;
+            case OreType.Gold:      swordMatDisplay.color = GoldColor; break;
         }
     }
 }

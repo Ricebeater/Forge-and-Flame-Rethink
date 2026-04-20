@@ -19,6 +19,7 @@ public class PlayerController : Player
     public CanvasGroup inventoryUI;
     private bool isInventoryVisible = false;
 
+
     [Header("Audio")]
     public SoundProfile attackSounds;
     public SoundProfile hurtSounds;
@@ -43,6 +44,8 @@ public class PlayerController : Player
     private InputAction lookAction;
     private InputAction attackAction;
 
+    
+
     protected override void Start()
     {
         base.Start();
@@ -61,6 +64,7 @@ public class PlayerController : Player
         if (lookAction == null) lookAction = InputSystem.actions.FindAction("Look");
         if (attackAction == null) attackAction = InputSystem.actions.FindAction("Attack");
 
+        ApplyUpgradeStats();
     }
 
     void Update()
@@ -106,7 +110,10 @@ public class PlayerController : Player
                 gameObject.SetActive(false);
                 GameManager.isWin = false;
                 GameManager.Instance.TriggerEndGame();
+
+                
             }
+
         }
     }
 
@@ -301,6 +308,41 @@ public class PlayerController : Player
         else
         {
             inventoryUI.alpha = 0;
+        }
+    }
+
+    private void ApplyUpgradeStats()
+    {
+        switch (InventoryManager.Instance.healthLv)
+        {
+            case 0: maxHP = 4; break;
+            case 1: maxHP = 5; break;
+            case 2: maxHP = 6; break;
+            case 3: maxHP = 8; break;
+        }
+
+        switch (InventoryManager.Instance.speedLv) 
+        { 
+            case 0 : moveSpeed = 2; break;
+            case 1 : moveSpeed = 2.5f; break;
+            case 2 : moveSpeed = 3; break;
+            case 3 : moveSpeed = 4; break;
+        }
+
+        switch (InventoryManager.Instance.damageLv)
+        {
+            case 0: damage = 1; break;
+            case 1: damage = 2; break;
+            case 2: damage = 3; break;
+            case 3: damage = 4; break;
+        }
+
+        switch (InventoryManager.Instance.backpackLv) 
+        {
+            case 0: InventoryManager.Instance.inventroySize = 12; break;
+            case 1: InventoryManager.Instance.inventroySize = 14; break;
+            case 2: InventoryManager.Instance.inventroySize = 16; break;
+            case 3: InventoryManager.Instance.inventroySize = 20; break;
         }
     }
 

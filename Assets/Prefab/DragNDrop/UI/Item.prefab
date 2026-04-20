@@ -102,7 +102,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c59c7c9e753d5143b8e808e0118f077, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InventoryItem
+  grid: {fileID: 0}
   itemData: {fileID: 11400000, guid: 98ef070625bf2b647b55dda055a1eb76, type: 2}
+  icon: {fileID: 0}
   rectTransform: {fileID: 0}
   gridX: 0
   gridY: 0
@@ -120,4 +122,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DragableItem
   item: {fileID: 0}
-  grid: {fileID: 0}
+  currentGrid: {fileID: 0}

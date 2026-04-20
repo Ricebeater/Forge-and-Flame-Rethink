@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -24,15 +25,21 @@ public class PlayerInventory : InventoryBase
     protected override void Awake()
     {
         base.Awake();
-        slots = new InventoryItem[gridWidth, gridHeight];
+        
         rectTransform = GetComponent<RectTransform>();
     }
 
-    private void Start()
+    private IEnumerator Start()
     {
+        yield return null;
+        
+        gridWidth = InventoryManager.Instance.inventroySize;
+
+        slots = new InventoryItem[gridWidth, gridHeight];
+
         cellSize = GlobalSetteing.GridSize;
         rectTransform.sizeDelta = new Vector2(gridWidth * cellSize, gridHeight * cellSize);
-        
+           
         if (OrderManager.Instance != null)
         {
             InventoryManager.Instance.EmptyHuntBagIntoPouch();
@@ -44,6 +51,7 @@ public class PlayerInventory : InventoryBase
 
     public void UpdateSupplyUI()
     {
+
         if (OrderManager.Instance != null && InventoryManager.Instance != null)
         {
             if (redGemCountText != null)        redGemCountText.text        = InventoryManager.Instance.GetPouchAmount(OrderManager.Instance.redGemData).ToString();

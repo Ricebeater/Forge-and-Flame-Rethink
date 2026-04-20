@@ -21,7 +21,7 @@ MonoBehaviour:
   patrolRadius: 3
   minWaitTime: 1
   maxWaitTime: 3
-  maxHP: 40
+  maxHP: 4
   damage: 1
   attackRange: 0.5
   attackCooldown: 1.5

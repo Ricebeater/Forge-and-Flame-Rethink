@@ -15,6 +15,11 @@ public class ForgingMinigame : MinigameBase
     [SerializeField] private RectTransform targetZoneTransform;
     [SerializeField] private GameObject endGameButton;
     [SerializeField] private Slider progressBar;
+    [SerializeField] private Image heart1;
+    [SerializeField] private Image heart2;
+    [SerializeField] private Image heart3;
+    [SerializeField] private Sprite heartBroken;
+    [SerializeField] private Sprite heartFull;
 
     [Header("Animation")]
     [SerializeField] private Animator anim;
@@ -22,6 +27,8 @@ public class ForgingMinigame : MinigameBase
     [SerializeField] private GameObject perfectHitFX;
     [SerializeField] private GameObject goodHitFX;
     [SerializeField] private GameObject missHitFX;
+    [SerializeField] private RectTransform hotMetal;
+    [SerializeField] private CanvasGroup hotness;
 
     [Header("Debug")]
     [SerializeField] private TextMeshProUGUI currentA;
@@ -86,6 +93,8 @@ public class ForgingMinigame : MinigameBase
         HandleInput();
 
         UpdateProgressBarUI();
+        HandleHotMetalAnimation();
+        UpdateHeart();
 
         AngleDebug();
     }
@@ -94,6 +103,7 @@ public class ForgingMinigame : MinigameBase
     {
         if (isPaused) { return; }
         if (currentRound >= maxRounds) { return; }
+        if (currentFails >= maxFails) { return; }
 
         currentAngle += RotationSpeed * needleDirection * Time.deltaTime;
 
@@ -116,7 +126,7 @@ public class ForgingMinigame : MinigameBase
     {
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
         {
-            if (currentRound < maxRounds)
+            if (currentRound < maxRounds && currentFails < maxFails)
             {
                 CheckHit();
             }
@@ -153,7 +163,7 @@ public class ForgingMinigame : MinigameBase
             if (currentFails >= maxFails)
             {
                 Debug.Log("Weapon Ruined! Forging Failed.");
-                endGameButton.SetActive(true); //EndGame();
+                EndGame();
                 return;
             }
         }
@@ -162,7 +172,7 @@ public class ForgingMinigame : MinigameBase
         {
             score = Mathf.Clamp(score, 0, 100);
             Debug.Log($"Forging Complete! Final Score: {score}");
-            endGameButton.SetActive(true); //EndGame();
+            EndGame();
         }
     }
 
@@ -189,10 +199,6 @@ public class ForgingMinigame : MinigameBase
         PMin.text = $"Perfect Min: {perfectAngleMin:F1}";
     }
 
-    public override void EndGame()
-    {
-        base.EndGame();
-    }
 
     #region Animation
 
@@ -218,6 +224,17 @@ public class ForgingMinigame : MinigameBase
         
     }
 
+    private void HandleHotMetalAnimation()
+    {
+        float maxHeight = (currentRound * 45f) + 45f;
+
+        if (hotMetal == null) { return; }
+        if (hotness == null) { return; }
+
+        hotMetal.sizeDelta = new Vector2(52f, maxHeight);
+        hotness.alpha = Mathf.Floor((maxRounds - currentRound)/maxRounds);
+    }
+
     #endregion
 
     private void UpdateProgressBarUI()
@@ -225,6 +242,37 @@ public class ForgingMinigame : MinigameBase
         if (progressBar == null) { return; }
         progressBar.maxValue = maxRounds;
         progressBar.value = currentRound;
+    }
+
+    private void UpdateHeart()
+    {
+        if (heart1 != null && heart2 != null && heart3 != null)
+        {
+            if (currentFails <= 0)
+            {
+                heart1.sprite = heartFull;
+                heart2.sprite = heartFull;
+                heart3.sprite = heartFull;
+            }
+            else if (currentFails == 1)
+            {
+                heart1.sprite = heartBroken;
+                heart2.sprite = heartFull;
+                heart3.sprite = heartFull;
+            }
+            else if (currentFails == 2)
+            {
+                heart1.sprite = heartBroken;
+                heart2.sprite = heartBroken;
+                heart3.sprite = heartFull;
+            }
+            else if (currentFails >= 3)
+            {
+                heart1.sprite = heartBroken;
+                heart2.sprite = heartBroken;
+                heart3.sprite = heartBroken;
+            }
+        }
     }
 
     // Dramatic pause

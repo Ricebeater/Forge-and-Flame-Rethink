@@ -12,6 +12,14 @@ public class InventoryManager : MonoBehaviour
 
     public List<ItemData> huntBag = new List<ItemData>();
 
+    [Header("Player Upgrade")]
+    public int healthLv   = 0;
+    public int speedLv    = 0;
+    public int damageLv   = 0;
+    public int backpackLv = 0;
+
+    public int inventroySize = 0;
+
     private void Awake()
     {
         if (Instance == null)

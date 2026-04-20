@@ -114,12 +114,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7184441768588103929, guid: e38fd2b6e7fbb2a4aaa342e5d2a1b8d2, type: 3}
       propertyPath: m_Name
-      value: Bone
+      value: Red Gem
       objectReference: {fileID: 0}
     - target: {fileID: 8890615444138213058, guid: e38fd2b6e7fbb2a4aaa342e5d2a1b8d2, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 5b8bf9edcfeb0d349b8b9d69abb90cf3, type: 3}
+      objectReference: {fileID: 21300000, guid: 6e4c323647554d2439ffcc507527d001, type: 3}
     - target: {fileID: 8890615444138213058, guid: e38fd2b6e7fbb2a4aaa342e5d2a1b8d2, type: 3}
       propertyPath: m_SortingLayer
       value: 0

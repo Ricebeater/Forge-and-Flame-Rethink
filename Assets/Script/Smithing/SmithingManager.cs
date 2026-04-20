@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -11,6 +12,9 @@ public class SmithingManager : MonoBehaviour
     public SmelthingMinigame smelthingGame;
     public ForgingMinigame forgingGame;
     public QuenchingMinigame quenchingGame;
+
+    [Header("Effect")]
+    [SerializeField] private GameObject finishBanner;
 
     private float smeltingScore;
     private float forgingScore;
@@ -28,6 +32,11 @@ public class SmithingManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    private void Start()
+    {
+        finishBanner.SetActive(false);
     }
 
     private void Update()
@@ -71,6 +80,8 @@ public class SmithingManager : MonoBehaviour
 
     public void StartSmithing()
     {
+        totalScore = 0;
+
         currentCraftingStep = CraftingStep.Smelting;
         if (smelthingGame != null)
         {
@@ -78,12 +89,13 @@ public class SmithingManager : MonoBehaviour
         }
     }
 
-    public void FinalSmithingScore()
+    public float FinalSmithingScore()
     {
-        totalScore = smeltingScore + forgingScore + quenchingScore;
         Debug.Log($"Final Smithing Score: {totalScore}");
-
         MoneyManager.Instance.AddMoney((int)totalScore);
+        CustomerManager.Instance.totalMoneyEarnToday += totalScore;
+
+        return totalScore = smeltingScore + forgingScore + quenchingScore;
     }
 
     public bool IsCurrentStep(CraftingStep step)

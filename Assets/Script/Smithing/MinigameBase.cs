@@ -1,3 +1,5 @@
+using System.Collections;
+using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 
 public class MinigameBase : MonoBehaviour
@@ -6,6 +8,9 @@ public class MinigameBase : MonoBehaviour
     public CanvasGroup minigameCanvas;
     protected bool isPlaying = false;
     protected float score;
+
+    [Header("Effect")]
+    [SerializeField] private GameObject finishBanner;
 
     private void Start()
     {
@@ -21,10 +26,23 @@ public class MinigameBase : MonoBehaviour
     public virtual void EndGame()
     {
         isPlaying = false;
+        
+        StartCoroutine(PlayFinishBanner());
+
+    }
+
+    public virtual IEnumerator PlayFinishBanner()
+    {
+        finishBanner.SetActive(true);
+
+        yield return new WaitForSecondsRealtime(2f);
+
+        finishBanner.SetActive(false);
+
         HideMinigameUI();
-        
+
         SmithingManager.Instance.CompleteCurrentStep(score);
-        
+
         score = 0;
     }
 

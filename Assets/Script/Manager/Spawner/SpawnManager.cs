@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SpawnManager : MonoBehaviour
 {
     [Header("Global Settings")]
     public Transform player;
     public TMP_Text timerText;
+    [SerializeField] private Slider clockSlider;
 
     [Header("Resource Phase Settings")]
     public float gatheringTime = 60f;
@@ -53,15 +55,24 @@ public class SpawnManager : MonoBehaviour
 
     void EndGatheringPhase()
     {
+        GameManager.Instance.TriggerEndGame();
+        
         isPhaseActive = false;
         timeRemaining = 0;
-        UpdateTimerUI();
+        
+        //UpdateTimerUI();
+        
         foreach (var spawner in allSpawnersInScene) spawner.isActive = false;
         if (timerText != null) { timerText.text = "TIME'S UP!"; timerText.color = Color.red; }
     }
 
     void UpdateTimerUI()
     {
+        if(clockSlider != null)
+        {
+            clockSlider.value = Mathf.Ceil(timeRemaining);
+        }
+
         if (timerText != null)
         {
             timerText.text = $"TIME LEFT: {Mathf.CeilToInt(timeRemaining)}s";
@@ -69,4 +80,6 @@ public class SpawnManager : MonoBehaviour
             else timerText.color = Color.white;
         }
     }
+
+    
 }

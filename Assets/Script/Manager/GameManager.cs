@@ -23,6 +23,9 @@ public class GameManager : MonoBehaviour
     public CanvasGroup endScreenCanvasGroup;
     public TextMeshProUGUI endGameText;
 
+    [SerializeField] private GameObject transitionEffect;
+    [SerializeField] private Transform transitionEffectPos;
+
     [Header("Audio")]
     public AudioClip menuMusic;
     [Range(0f, 1f)] public float menuVolume = 0.5f;
@@ -53,7 +56,7 @@ public class GameManager : MonoBehaviour
 
         if (menuCanvas != null) menuCanvas.SetActive(true);
         ToggleInGameUI(false);
-        if (endScreenCanvasGroup != null) endScreenCanvasGroup.alpha = 0;
+        if (endScreenCanvasGroup != null) endScreenCanvasGroup.alpha = 1;
 
         if (spawner != null) spawner.enabled = false;
         
@@ -100,7 +103,8 @@ public class GameManager : MonoBehaviour
     public void TriggerEndGame()
     {
         Debug.Log("BOSS DEFEATED! YOU WIN!");
-        StartCoroutine(EndSequence());
+        EndWithTransition();
+        //StartCoroutine(EndSequence());
     }
 
     IEnumerator EndSequence()
@@ -153,6 +157,14 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    private void EndWithTransition()
+    {
+        if (transitionEffect != null)
+        {
+            GameObject transition = Instantiate(transitionEffect, transitionEffectPos, false);
+        }
     }
 
     void ToggleInGameUI(bool isActive)

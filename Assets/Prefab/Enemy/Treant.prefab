@@ -344,11 +344,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpeedsterEnemy
   entityName: 
-  maxHP: 100
+  maxHP: 4
   currentHP: 0
-  damage: 10
-  flashDuration: 0
-  flashCount: 0
+  damage: 1
+  flashDuration: 0.4
+  flashCount: 2
   deadEffect: {fileID: 3333915296770053996, guid: ab67527754b38e34ca8c120929a4b75d, type: 3}
   player: {fileID: 0}
   groundLayer:

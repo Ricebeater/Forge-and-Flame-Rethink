@@ -344,11 +344,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BigEnemy
   entityName: 
-  maxHP: 100
+  maxHP: 7
   currentHP: 0
-  damage: 10
-  flashDuration: 0
-  flashCount: 0
+  damage: 2
+  flashDuration: 0.4
+  flashCount: 2
   deadEffect: {fileID: 8245046640809465532, guid: dbb63399389ba6d41865e7007736fca3, type: 3}
   player: {fileID: 0}
   groundLayer:
