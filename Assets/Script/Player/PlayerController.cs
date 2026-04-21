@@ -79,11 +79,12 @@ public class PlayerController : Player
         HandleAttack();
         HandleFootsteps();
 
-        if (Input.GetKeyDown(KeyCode.Tab))
+        if (Input.GetKeyDown(KeyCode.B))
         {
             //LockCursor();
             //ShowInventoryUI();
-            
+            GameManager.Instance.TriggerEndGame();
+            Die();
         }
     }
 

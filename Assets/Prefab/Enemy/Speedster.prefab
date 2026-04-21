@@ -374,7 +374,11 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 7c0dd1b3cda34704ebeec819c41b552c, type: 3}
     - {fileID: 8300000, guid: 18e1d616fe08af742a359a0f4338c507, type: 3}
     footstepVolume: 0.4
-  lootTable: []
+  lootTable:
+  - itemPrefab: {fileID: 6259897697475669495, guid: 89d89d945b1b6e64dbc865ce592c89c7, type: 3}
+    dropChance: 50
+  - itemPrefab: {fileID: 3035157269422039121, guid: c59b8a77a650f774e8201f72e83c18cc, type: 3}
+    dropChance: 50
   player: {fileID: 0}
   groundLayer:
     serializedVersion: 2

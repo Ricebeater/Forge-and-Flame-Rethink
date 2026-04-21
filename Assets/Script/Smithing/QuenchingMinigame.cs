@@ -88,6 +88,11 @@ public class QuenchingMinigame : MinigameBase
     {
         if(!isPlaying) { return; }
 
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            FailAttemp();
+        }
+
         HandlePhysics();
         MoveTarget();
         CheckZone();

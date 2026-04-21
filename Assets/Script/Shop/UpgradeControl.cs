@@ -15,6 +15,9 @@ public class UpgradeControl : MonoBehaviour
     [SerializeField] private TextMeshProUGUI moneyEarnText;
     [SerializeField] private TextMeshProUGUI todayQuotaText;
     [SerializeField] private TextMeshProUGUI moneyRemainText;
+    [SerializeField] private GameObject payButton;
+    [SerializeField] private GameObject loseButton;
+    [SerializeField] private CanvasGroup loseScreen;
 
     private float moneyEarnToday;
     private float moneyRemain;
@@ -48,7 +51,9 @@ public class UpgradeControl : MonoBehaviour
 
     private void Start()
     {
-        
+        loseScreen.alpha = 0f;
+        loseScreen.blocksRaycasts = false;
+        loseScreen.interactable = false;
     }
 
     private void Update()
@@ -57,7 +62,11 @@ public class UpgradeControl : MonoBehaviour
         SummarizeDay();
         SetUpgradeSlider();
         SetUpgradePrice();
-        
+
+        if (SmithingManager.Instance.IsCurrentStep(CraftingStep.Delivering))
+        {
+            CheckIfLose();
+        }
     }
 
     private void SummarizeDay()
@@ -209,6 +218,31 @@ public class UpgradeControl : MonoBehaviour
         MoneyManager.Instance.playerMoney -= ((int)todayQuota);
         SceneManager.LoadScene("Huntgame");
 
+    }
+
+    public void LoseTheGame()
+    {
+        loseScreen.alpha = 1f;
+        loseScreen.blocksRaycasts = true;
+        loseScreen.interactable = true;
+    }
+
+    private void CheckIfLose()
+    {
+        if(MoneyManager.Instance.playerMoney < todayQuota)
+        {
+            loseButton.SetActive(true);
+            payButton.SetActive(false);
+        }
+        else
+        {
+            payButton.SetActive(true);
+            loseButton.SetActive(false);
+
+            loseScreen.alpha = 0f;
+            loseScreen.blocksRaycasts = false;
+            loseScreen.interactable = false;
+        }
     }
 
     #endregion

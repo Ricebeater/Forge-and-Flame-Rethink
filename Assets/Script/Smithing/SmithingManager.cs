@@ -21,6 +21,7 @@ public class SmithingManager : MonoBehaviour
     private float forgingScore;
     private float quenchingScore;
     private float totalScore;
+    public float choiceMultilier;
 
 
     private void Awake()
@@ -98,11 +99,28 @@ public class SmithingManager : MonoBehaviour
 
     public float FinalSmithingScore()
     {
+        float oreMultiplier = 1f;
+
         Debug.Log($"Final Smithing Score: {totalScore}");
         MoneyManager.Instance.AddMoney((int)totalScore);
+
         CustomerManager.Instance.totalMoneyEarnToday += totalScore;
 
-        return totalScore = smeltingScore + forgingScore + quenchingScore;
+        if (OrderManager.Instance.selectedOreType == OreType.Gold)
+        {
+            oreMultiplier = 1.5f;
+        }
+        else if(OrderManager.Instance.selectedOreType == OreType.Silver)
+        {
+            oreMultiplier = 1.2f;
+        }
+        else
+        {
+            oreMultiplier = 1f;
+        }
+
+
+            return totalScore = (smeltingScore + forgingScore + quenchingScore) * oreMultiplier;
     }
 
     public bool IsCurrentStep(CraftingStep step)

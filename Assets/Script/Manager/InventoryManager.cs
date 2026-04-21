@@ -106,4 +106,17 @@ public class InventoryManager : MonoBehaviour
             }
         }
     }
+    public void ResetData()
+    {
+        supplyPouch.Clear();
+        huntBag.Clear();
+        savedGridItems.Clear();
+
+        healthLv = 0;
+        speedLv = 0;
+        damageLv = 0;
+        backpackLv = 0;
+
+        Debug.Log("Inventory and Upgrades have been wiped clean.");
+    }
 }

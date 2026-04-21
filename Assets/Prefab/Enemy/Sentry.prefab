@@ -289,7 +289,11 @@ MonoBehaviour:
       volume: 0.8
     footstepSounds: []
     footstepVolume: 0.4
-  lootTable: []
+  lootTable:
+  - itemPrefab: {fileID: 3035157269422039121, guid: c59b8a77a650f774e8201f72e83c18cc, type: 3}
+    dropChance: 50
+  - itemPrefab: {fileID: 155925891163974985, guid: 70f37f3047da48a4d93ce0fabbc62e8e, type: 3}
+    dropChance: 50
   player: {fileID: 0}
   groundLayer:
     serializedVersion: 2

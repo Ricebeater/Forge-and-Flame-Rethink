@@ -34,6 +34,25 @@ public class Customer : MonoBehaviour
     {
         HandleMovement();
         HandleInteraction();
+        if (SmithingManager.Instance.IsCurrentStep(CraftingStep.Forging))
+        {
+            if(customerSO.wantedWeapon == OrderManager.Instance.selectedWeapon && customerSO.wantedElement == OrderManager.Instance.selectedWeaponElement)
+            {
+                SmithingManager.Instance.choiceMultilier = 1.5f;
+            }
+            else if (customerSO.wantedWeapon == OrderManager.Instance.selectedWeapon && customerSO.wantedElement != OrderManager.Instance.selectedWeaponElement)
+            {
+                SmithingManager.Instance.choiceMultilier = 1.2f;
+            }
+            else if (customerSO.wantedWeapon != OrderManager.Instance.selectedWeapon && customerSO.wantedElement == OrderManager.Instance.selectedWeaponElement)
+            {
+                SmithingManager.Instance.choiceMultilier = 1.2f;
+            }
+            else
+            {
+                SmithingManager.Instance.choiceMultilier = 0.8f;
+            }
+        }
     }
 
     private void HandleMovement()
