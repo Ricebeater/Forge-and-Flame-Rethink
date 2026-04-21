@@ -1,5 +1,5 @@
-using Microsoft.Unity.VisualStudio.Editor;
 using Unity.Hierarchy;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -26,6 +26,13 @@ public class QuenchingMinigame : MinigameBase
     [SerializeField] private Slider playerPositionSlider;
     [SerializeField] private RectTransform targetZoneUI;
     [SerializeField] private Slider progressBarSlider;
+    [SerializeField] private Image heart1;
+    [SerializeField] private Image heart2;
+    [SerializeField] private Image heart3;
+    [SerializeField] private Sprite heartBroken;
+    [SerializeField] private Sprite heartFull;
+    [SerializeField] private Image sword;
+    [SerializeField] private Image aura;
 
     private float barPosition = 0f;
     private float barVelocity = 0f;
@@ -39,9 +46,12 @@ public class QuenchingMinigame : MinigameBase
     private int currentRound = 0;
     private int currentFails = 0;
 
+    private float _score = 0f;
+
     public override void StartGame()
     {
         base.StartGame();
+        _score = 0f;
         score = 0;
         currentRound = 0;
         currentFails = 0;
@@ -58,6 +68,7 @@ public class QuenchingMinigame : MinigameBase
             progressBarSlider.maxValue = requiredHoldTime;
         }
 
+        UpdateSword();
         StartNewRound();
     }
 
@@ -65,7 +76,7 @@ public class QuenchingMinigame : MinigameBase
     {
         barPosition = 0f;
         barVelocity = 0f;
-        currentHoldTime = 0f;
+        currentHoldTime = requiredHoldTime/2;
         timeRemaining = timeLimitPerRound;
 
         targetPosition = Random.Range(targetMinHeight, targetMaxHeight);
@@ -81,6 +92,7 @@ public class QuenchingMinigame : MinigameBase
         MoveTarget();
         CheckZone();
         HandleTimer();
+        UpdateHeart();
     }
 
     private void HandlePhysics()
@@ -166,6 +178,11 @@ public class QuenchingMinigame : MinigameBase
             progressBarSlider.value = currentHoldTime;
         }
 
+        if(currentHoldTime <= 0)
+        {
+            FailAttemp();
+        }
+
         if (currentHoldTime >= requiredHoldTime)
         {
             RoundWon();
@@ -185,12 +202,14 @@ public class QuenchingMinigame : MinigameBase
     private void RoundWon()
     {
         Debug.Log("Round Won!");
-        score += 33;
+        _score += 33;
         currentRound++;
 
         if (currentRound >= maxRounds)
         {
-            score = 100;
+            _score = 100;
+
+            score = Mathf.RoundToInt(_score/20);
             Debug.Log($"Quenching Complete! Final Score: {score}");
             EndGame();
         }
@@ -203,10 +222,13 @@ public class QuenchingMinigame : MinigameBase
     private void FailAttemp()
     {
         currentFails++;
+
+        _score -= 33;
         Debug.Log($"Round Failed! Ran out of time. Fails: {currentFails}/{maxFails}");
 
         if (currentFails >= maxFails)
         {
+            score = Mathf.RoundToInt(_score / 20);
             Debug.Log("Weapon Ruined! Quenching Failed.");
             EndGame();
         }
@@ -215,6 +237,45 @@ public class QuenchingMinigame : MinigameBase
             StartNewRound();
         }
     }
+
+    private void UpdateHeart()
+    {
+        if (heart1 != null && heart2 != null && heart3 != null)
+        {
+            if (currentFails <= 0)
+            {
+                heart1.sprite = heartFull;
+                heart2.sprite = heartFull;
+                heart3.sprite = heartFull;
+            }
+            else if (currentFails == 1)
+            {
+                heart1.sprite = heartBroken;
+                heart2.sprite = heartFull;
+                heart3.sprite = heartFull;
+            }
+            else if (currentFails == 2)
+            {
+                heart1.sprite = heartBroken;
+                heart2.sprite = heartBroken;
+                heart3.sprite = heartFull;
+            }
+            else if (currentFails >= 3)
+            {
+                heart1.sprite = heartBroken;
+                heart2.sprite = heartBroken;
+                heart3.sprite = heartBroken;
+            }
+        }
+    }
+
+    private void UpdateSword()
+    {
+        if(sword == null) { return; }
+        if(aura == null) { return; }
+
+        sword.sprite = OrderManager.Instance.GetSelectedWeaponSprite();
+    } 
 
     public int GetQuenchScore()
     {

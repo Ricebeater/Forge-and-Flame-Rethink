@@ -91,9 +91,9 @@ public class Customer : MonoBehaviour
         {
             if (dialogText != null) 
             {
-                if (SmithingManager.Instance.GetTotalScore() > 200f) { dialogText.text = customerSO.goodFinish; }
-                else if (SmithingManager.Instance.GetTotalScore() > 100f) { dialogText.text = customerSO.okayFinish; }
-                else if (SmithingManager.Instance.GetTotalScore() <= 100f) { dialogText.text = customerSO.badFinish; }
+                if (SmithingManager.Instance.GetTotalScore() > 9) { dialogText.text = customerSO.goodFinish; }
+                else if (SmithingManager.Instance.GetTotalScore() > 5) { dialogText.text = customerSO.okayFinish; }
+                else if (SmithingManager.Instance.GetTotalScore() <= 4) { dialogText.text = customerSO.badFinish; }
                 
             }
             textBubble.SetActive(true);

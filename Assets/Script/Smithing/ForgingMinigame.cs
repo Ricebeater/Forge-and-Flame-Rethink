@@ -47,10 +47,13 @@ public class ForgingMinigame : MinigameBase
     private int currentFails = 0;
     private int needleDirection = 1;
 
+    private float _score;
+
     public override void StartGame()
     {
         base.StartGame();
         
+        _score = 0f;
         score = 0;
         currentRound = 0;
         currentFails = 0;
@@ -140,7 +143,7 @@ public class ForgingMinigame : MinigameBase
         {
             PopUpAnimation(2);
             Debug.Log("PERFECT Strike!");
-            score += 34;
+            _score += Mathf.RoundToInt(100/maxRounds);
             currentRound++;
             StartNewRound();
         }
@@ -149,7 +152,7 @@ public class ForgingMinigame : MinigameBase
         {
             PopUpAnimation(1);
             Debug.Log("Good Strike.");
-            score += 20;
+            _score += (Mathf.RoundToInt(100 / maxRounds) - 5);
             currentRound++;
             StartNewRound();
         }
@@ -162,6 +165,7 @@ public class ForgingMinigame : MinigameBase
 
             if (currentFails >= maxFails)
             {
+                score = Mathf.RoundToInt(_score / 20);
                 Debug.Log("Weapon Ruined! Forging Failed.");
                 EndGame();
                 return;
@@ -170,7 +174,7 @@ public class ForgingMinigame : MinigameBase
 
         if (currentRound >= maxRounds)
         {
-            score = Mathf.Clamp(score, 0, 100);
+            score = Mathf.RoundToInt(_score / 20);
             Debug.Log($"Forging Complete! Final Score: {score}");
             EndGame();
         }

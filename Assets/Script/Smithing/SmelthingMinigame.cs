@@ -22,6 +22,16 @@ public class SmelthingMinigame : MinigameBase
     [SerializeField] private Sprite rightArrowSprite;
     [SerializeField]private Image oreImage;
     [SerializeField]private Image gemImage;
+    [SerializeField] private Color arrowColor;
+    [SerializeField] private Color arrowColorGray;
+    [SerializeField] private Image heart1;
+    [SerializeField] private Image heart2;
+    [SerializeField] private Image heart3;
+    [SerializeField] private Sprite heartBroken;
+    [SerializeField] private Sprite heartFull;
+
+    [Header("Animation")]
+    [SerializeField] private Animator anim;
     
     private List<KeyCode> currentSequence = new List<KeyCode>();
     private int currentInputIndex = 0;
@@ -29,6 +39,8 @@ public class SmelthingMinigame : MinigameBase
     private int currentRound = 0;
     private int fails = 0;
     private float timeRemaining;
+
+    private float _score;
     
 
     public override void StartGame()
@@ -37,6 +49,7 @@ public class SmelthingMinigame : MinigameBase
 
         SetCraftingMaterialUI();
 
+        _score = 0;
         score = 0;
         currentRound = 0;
         roundsWon = 0;
@@ -56,6 +69,7 @@ public class SmelthingMinigame : MinigameBase
 
         HandleTimer();
         HandleInput();
+        UpdateHeart();
     }
 
     private void StartNewRound()
@@ -84,7 +98,7 @@ public class SmelthingMinigame : MinigameBase
         {
             if (i < arrowDisplays.Length)
             {
-                arrowDisplays[i].color = Color.white;
+                arrowDisplays[i].color = arrowColorGray;
 
                 switch (currentSequence[i])
                 {
@@ -122,7 +136,7 @@ public class SmelthingMinigame : MinigameBase
 
             if (Input.GetKeyDown(expectedKey))
             {
-                arrowDisplays[currentInputIndex].color = Color.gray;
+                arrowDisplays[currentInputIndex].color = arrowColor;
                 currentInputIndex++;
 
                 if (currentInputIndex >= currentSequence.Count)
@@ -142,6 +156,9 @@ public class SmelthingMinigame : MinigameBase
     {
         currentRound++;
         roundsWon++;
+
+        PlayBellowAnimation();
+
         Debug.Log($"Round {roundsWon} Won!");
 
         if (currentRound >= maxRounds)
@@ -149,18 +166,20 @@ public class SmelthingMinigame : MinigameBase
             
             if(fails > 0)
             {
-                score = 99 - (fails * 33);
+                _score = 99 - (fails * 33);
+                score = Mathf.RoundToInt(_score / 20);
             }
             else
             {
-                score = 100;
+                _score = 100;
+                score = _score / 20;
             }
             Debug.Log("All 3 rounds successful! Perfect Score: " + score);
             EndGame();
         }
         else
         {
-            score += 33;
+            _score += 33;
             StartNewRound();
         }
     }
@@ -191,8 +210,45 @@ public class SmelthingMinigame : MinigameBase
         gemImage.sprite = gemData.icon;
     }
 
+    private void UpdateHeart()
+    {
+        if (heart1 != null && heart2 != null && heart3 != null)
+        {
+            if (fails <= 0)
+            {
+                heart1.sprite = heartFull;
+                heart2.sprite = heartFull;
+                heart3.sprite = heartFull;
+            }
+            else if (fails == 1)
+            {
+                heart1.sprite = heartBroken;
+                heart2.sprite = heartFull;
+                heart3.sprite = heartFull;
+            }
+            else if (fails == 2)
+            {
+                heart1.sprite = heartBroken;
+                heart2.sprite = heartBroken;
+                heart3.sprite = heartFull;
+            }
+            else if (fails >= 3)
+            {
+                heart1.sprite = heartBroken;
+                heart2.sprite = heartBroken;
+                heart3.sprite = heartBroken;
+            }
+        }
+    }
+
     public int GetSmeltScore()
     {
         return (int)score;
-    }   
+    }
+    
+    private void PlayBellowAnimation()
+    {
+        if(anim == null) { return; }
+        anim.Play("Blow", 0, 0f);
+    }
 }

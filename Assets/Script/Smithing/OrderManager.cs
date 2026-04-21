@@ -24,6 +24,17 @@ public class OrderManager : MonoBehaviour
     public Color waterColor;
     public Color plantColor;
 
+    [Header("Sword Icon")]
+    public Sprite i_sword;
+    public Sprite i_rapier;
+    public Sprite i_mace;
+    public Sprite s_sword;
+    public Sprite s_rapier;
+    public Sprite s_mace;
+    public Sprite g_sword;
+    public Sprite g_rapier;
+    public Sprite g_mace;
+
     [Header("Supplies Data")]
     public ItemData redGemData;
     public ItemData blueGemData;
@@ -31,6 +42,10 @@ public class OrderManager : MonoBehaviour
     public ItemData ironData;
     public ItemData silverData;
     public ItemData goldData;
+
+    [Header("Animation")]
+    [SerializeField] private GameObject noSupplyPopUp;
+    [SerializeField] private Transform popUpPos;
 
     private bool hasSelectedWeapon = false;
     private bool hasSelectedWeaponElement = false;
@@ -128,6 +143,7 @@ public class OrderManager : MonoBehaviour
         }
         else
         {
+            GameObject popUp = Instantiate(noSupplyPopUp, popUpPos, false);
             Debug.Log("Not enough resources to craft this weapon!");
         }
     }
@@ -191,6 +207,26 @@ public class OrderManager : MonoBehaviour
         }
     }
 
+    public Sprite GetSelectedWeaponSprite()
+    {
+        switch (selectedOreType, selectedWeapon)
+        {
+            case (OreType.Iron, WeaponType.Sword)   : return i_sword;
+            case (OreType.Silver, WeaponType.Sword)   : return s_sword;
+            case (OreType.Gold, WeaponType.Sword)   : return g_sword;
+
+            case (OreType.Iron, WeaponType.Rapier): return i_rapier;
+            case (OreType.Silver, WeaponType.Rapier): return s_rapier;
+            case (OreType.Gold, WeaponType.Rapier): return g_rapier;
+
+            case (OreType.Iron, WeaponType.Mace): return i_mace;
+            case (OreType.Silver, WeaponType.Mace): return s_mace;
+            case (OreType.Gold, WeaponType.Mace): return g_mace;
+
+            default: return null;
+        }
+    }
+
     public ItemData GetSelectedElementData()
     {
         switch (selectedWeaponElement)
@@ -199,6 +235,18 @@ public class OrderManager : MonoBehaviour
             case WeaponElement.Water: return blueGemData;
             case WeaponElement.Plant: return enchantedWoodData;
             default: return null;
+        }
+    }
+
+    public Color GetSelectedElementColor()
+    {
+        switch (selectedWeaponElement)
+        {
+            case WeaponElement.Fire: return fireColor;
+            case WeaponElement.Water: return waterColor;
+            case WeaponElement.Plant: return plantColor;
+
+            default: return Color.white;
         }
     }
 

@@ -12,6 +12,7 @@ public class SmithingManager : MonoBehaviour
     public SmelthingMinigame smelthingGame;
     public ForgingMinigame forgingGame;
     public QuenchingMinigame quenchingGame;
+    public WeaponShower weaponShower;
 
     [Header("Effect")]
     [SerializeField] private GameObject finishBanner;
@@ -66,9 +67,15 @@ public class SmithingManager : MonoBehaviour
 
             case CraftingStep.Quenching:
                 quenchingScore = stepScore;
-                currentCraftingStep = CraftingStep.Delivering;
+                currentCraftingStep = CraftingStep.ShowWeapon;
+                weaponShower.ShowWeaponShowerUI();
                 Debug.Log("Current Step: Delivering");
+                break;
+
+            case CraftingStep.ShowWeapon:
+                currentCraftingStep = CraftingStep.Delivering;
                 FinalSmithingScore();
+                Debug.Log("Current Step: Delivering");
                 break;
 
             case CraftingStep.Delivering:
@@ -116,5 +123,6 @@ public enum CraftingStep
     Smelting,
     Forging,
     Quenching,
+    ShowWeapon,
     Delivering
 }

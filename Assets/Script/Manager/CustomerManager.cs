@@ -51,6 +51,7 @@ public class CustomerManager : MonoBehaviour
         MoneyManager.Instance.currentDay++;
         totalMoneyEarnToday = 0;
         customerSpawnedToday = 0;
+        maxCustomersPerDay = (MoneyManager.Instance.currentDay * 2) + 3;
         SpawnNextCustomer();
         Debug.Log("A new day has started! Customers are ready to arrive.");
     }
