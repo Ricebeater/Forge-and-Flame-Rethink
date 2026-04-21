@@ -102,7 +102,7 @@ Transform:
   m_GameObject: {fileID: 2043803741367631961}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.048, z: 0}
   m_LocalScale: {x: 0.44, y: 0.43680412, z: 1.2228953}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -141,7 +141,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9d1d1fa5f79ff024eb7417e039c08557, type: 2}
+  - {fileID: 2100000, guid: 65d49f03461598c46a94c39ede90893e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -380,7 +380,7 @@ GameObject:
   - component: {fileID: 6135828743702561660}
   - component: {fileID: 4308720632230557654}
   m_Layer: 0
-  m_Name: Boar
+  m_Name: Normal
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -507,11 +507,7 @@ MonoBehaviour:
   flashDuration: 0.4
   flashCount: 2
   deadEffect: {fileID: 8245046640809465532, guid: dbb63399389ba6d41865e7007736fca3, type: 3}
-  player: {fileID: 0}
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  agent: {fileID: 0}
+  visualRoot: {fileID: 1207520030754919965}
   profile: {fileID: 11400000, guid: a7a34a5f847db6842993a4db483333ea, type: 2}
   animSettings:
     walkBobSpeed: 10
@@ -524,18 +520,24 @@ MonoBehaviour:
       volume: 1
     hurtSound:
       clips:
-      - {fileID: 8300000, guid: a3c4aa68956aff14a985d9fe9ff19c8b, type: 3}
-      volume: 1
+      - {fileID: 8300000, guid: 2d7e3781638d65f4989ba791d2c9f5b6, type: 3}
+      volume: 0.8
     dieSound:
       clips:
       - {fileID: 8300000, guid: 9b29ee58c82af56438a869cd10897aa4, type: 3}
-      volume: 1
+      volume: 0.8
     footstepSounds:
     - {fileID: 8300000, guid: 3d4c5cdccbead7d4982595ed06240e05, type: 3}
     - {fileID: 8300000, guid: 7c0dd1b3cda34704ebeec819c41b552c, type: 3}
     - {fileID: 8300000, guid: 18e1d616fe08af742a359a0f4338c507, type: 3}
     footstepVolume: 0.4
   lootTable: []
+  player: {fileID: 0}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  agent: {fileID: 0}
+  isAnimatingAttack: 0
 --- !u!82 &4308720632230557654
 AudioSource:
   m_ObjectHideFlags: 0

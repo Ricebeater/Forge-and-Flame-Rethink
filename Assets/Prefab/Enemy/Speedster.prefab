@@ -118,7 +118,7 @@ RectTransform:
   m_GameObject: {fileID: 2767435132862099098}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.001, y: 0.0002, z: 1}
+  m_LocalScale: {x: 0.000499375, y: 0.00011, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4664327667699202778}
@@ -126,7 +126,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0.774}
+  m_AnchoredPosition: {x: 0, y: -0.103}
   m_SizeDelta: {x: 1035, y: 582.03}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &806952333574028189
@@ -219,11 +219,11 @@ GameObject:
   - component: {fileID: 1618025624351369152}
   - component: {fileID: 5848706055731175481}
   - component: {fileID: 5351595542857129509}
-  - component: {fileID: 4876893350923825607}
-  - component: {fileID: -4092743192090539531}
-  - component: {fileID: 6231550649388213331}
+  - component: {fileID: -8022328531089475691}
+  - component: {fileID: 4174828186028681185}
+  - component: {fileID: -6516393482763573249}
   m_Layer: 0
-  m_Name: Mammoth
+  m_Name: Speedster
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -265,10 +265,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.24
-  m_Height: 0.79
+  m_Radius: 0.12
+  m_Height: 0.44
   m_Direction: 1
-  m_Center: {x: 0, y: 0.33, z: 0}
+  m_Center: {x: 0, y: -0.26, z: 0}
 --- !u!54 &5848706055731175481
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -305,7 +305,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 3252229227927214002}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.23
+  m_Radius: 0.12
   m_Speed: 2
   m_Acceleration: 8
   avoidancePriority: 50
@@ -314,11 +314,11 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 0.77
-  m_BaseOffset: 0.06
+  m_Height: 0.44
+  m_BaseOffset: 0.48
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &4876893350923825607
+--- !u!114 &-8022328531089475691
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -330,8 +330,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 734c96a5a99687f44a8aebe0bf9ee55d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAI
-  enemy: {fileID: -4092743192090539531}
---- !u!114 &-4092743192090539531
+  enemy: {fileID: 4174828186028681185}
+--- !u!114 &4174828186028681185
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -340,22 +340,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 3252229227927214002}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb614ac1c041e87498e092e5c2270f13, type: 3}
+  m_Script: {fileID: 11500000, guid: 32aaaa4490de85240afdcb9c7ead5c77, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BigEnemy
+  m_EditorClassIdentifier: Assembly-CSharp::SpeedsterEnemy
   entityName: 
-  maxHP: 7
+  maxHP: 4
   currentHP: 0
-  damage: 2
+  damage: 1
   flashDuration: 0.4
   flashCount: 2
   deadEffect: {fileID: 8245046640809465532, guid: dbb63399389ba6d41865e7007736fca3, type: 3}
-  player: {fileID: 0}
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  agent: {fileID: 0}
-  profile: {fileID: 11400000, guid: a52d541dd97acd5488d243b52ec8fac4, type: 2}
+  visualRoot: {fileID: 2726001495831810826}
+  profile: {fileID: 11400000, guid: c90617289873a1e4581e749363e54252, type: 2}
   animSettings:
     walkBobSpeed: 10
     walkBobAmount: 0.1
@@ -367,19 +363,31 @@ MonoBehaviour:
       volume: 1
     hurtSound:
       clips:
-      - {fileID: 8300000, guid: a3c4aa68956aff14a985d9fe9ff19c8b, type: 3}
-      volume: 1
+      - {fileID: 8300000, guid: b24a0d87b5dc4544ea0e5c60550bb25a, type: 3}
+      volume: 0.8
     dieSound:
       clips:
-      - {fileID: 8300000, guid: 9b29ee58c82af56438a869cd10897aa4, type: 3}
-      volume: 1
+      - {fileID: 8300000, guid: 5b3e7a9742722184196d5b1275a75cad, type: 3}
+      volume: 0.8
     footstepSounds:
     - {fileID: 8300000, guid: 3d4c5cdccbead7d4982595ed06240e05, type: 3}
     - {fileID: 8300000, guid: 7c0dd1b3cda34704ebeec819c41b552c, type: 3}
     - {fileID: 8300000, guid: 18e1d616fe08af742a359a0f4338c507, type: 3}
     footstepVolume: 0.4
   lootTable: []
---- !u!82 &6231550649388213331
+  player: {fileID: 0}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  agent: {fileID: 0}
+  isAnimatingAttack: 0
+  speedsterAnim:
+    wheelSprite: {fileID: 8225793576553365438}
+    rollSpeedMultiplier: 300
+    dashSpeed: 5
+    dashDuration: 0.5
+    anticipationTime: 0.6
+--- !u!82 &-6516393482763573249
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -551,7 +559,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!1 &6861330915718572317
+--- !u!1 &3923480927634250204
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -559,56 +567,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2726001495831810826}
-  - component: {fileID: 1360052114259598983}
-  m_Layer: 0
-  m_Name: Visual
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2726001495831810826
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6861330915718572317}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.448, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 7891480719894626334}
-  - {fileID: 6248673941891485757}
-  m_Father: {fileID: 2854368322118517126}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1360052114259598983
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6861330915718572317}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d1c9a347a323da4583d5212b9c22a3e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BillboardCam
-  mainCamera: {fileID: 0}
---- !u!1 &6975651575170278736
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6248673941891485757}
-  - component: {fileID: 5513244461963708357}
-  - component: {fileID: 6385787006455808804}
+  - component: {fileID: 8225793576553365438}
+  - component: {fileID: 5832920793179023221}
+  - component: {fileID: 7321528458981823125}
   m_Layer: 0
   m_Name: Quad
   m_TagString: Untagged
@@ -616,36 +577,36 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6248673941891485757
+--- !u!4 &8225793576553365438
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6975651575170278736}
+  m_GameObject: {fileID: 3923480927634250204}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.115, z: 0}
-  m_LocalScale: {x: 0.88, y: 0.88150173, z: 1.3777555}
-  m_ConstrainProportionsScale: 1
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.317, z: 0}
+  m_LocalScale: {x: 0.33386147, y: 0.33443078, z: 0.5227}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2726001495831810826}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &5513244461963708357
+--- !u!33 &5832920793179023221
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6975651575170278736}
+  m_GameObject: {fileID: 3923480927634250204}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &6385787006455808804
+--- !u!23 &7321528458981823125
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6975651575170278736}
+  m_GameObject: {fileID: 3923480927634250204}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -664,7 +625,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7e885a808f73cfa48b06ef31a5b66ca8, type: 2}
+  - {fileID: 2100000, guid: a3678ec4d7f7b0b45a57d40986a15ee1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -687,6 +648,53 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &6861330915718572317
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2726001495831810826}
+  - component: {fileID: 7661087302804002552}
+  m_Layer: 0
+  m_Name: Visual
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2726001495831810826
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6861330915718572317}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 7891480719894626334}
+  - {fileID: 8225793576553365438}
+  m_Father: {fileID: 2854368322118517126}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7661087302804002552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6861330915718572317}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d1c9a347a323da4583d5212b9c22a3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BillboardCam
+  mainCamera: {fileID: 0}
 --- !u!1 &7311720948652823765
 GameObject:
   m_ObjectHideFlags: 0
@@ -824,8 +832,8 @@ Transform:
   m_GameObject: {fileID: 9068076606212251207}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.115, z: 0}
-  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
+  m_LocalPosition: {x: 0, y: -0.173, z: 0}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 2726001495831810826}
@@ -877,7 +885,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 0b8ab5d7360ca7042b8511ca4503cc7a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: bbd1e057be5153c46aa920bcd9c7f890, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

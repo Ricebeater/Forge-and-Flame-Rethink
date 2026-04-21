@@ -33,12 +33,9 @@ public class EnemyAudioSettings
 [RequireComponent(typeof(NavMeshAgent))]
 public class Enemy : Character
 {
-    private AudioSource footstepSource;
-    private float stepTimer = 0f;
-
-    [HideInInspector] public Transform player;
-    [HideInInspector] public LayerMask groundLayer;
-    [HideInInspector] public NavMeshAgent agent;
+    [Header("Visual Settings")]
+    [Tooltip("Drag sprite to this")]
+    public Transform visualRoot;
 
     [Header("Enemy Data Profile")]
     public EnemyProfileSO profile;
@@ -50,10 +47,20 @@ public class Enemy : Character
     [Header("Loot Settings")]
     public List<Loot> lootTable;
 
+    [HideInInspector] public Transform player;
+    [HideInInspector] public LayerMask groundLayer;
+    [HideInInspector] public NavMeshAgent agent;
+
+    [HideInInspector] public bool isAnimatingAttack = false;
+
+    private AudioSource footstepSource;
+    private float stepTimer = 0f;
+
     protected Vector3 originalScale;
     protected Coroutine animationRoutine;
-    protected bool isAnimatingAttack = false;
 
+    protected static float lastDieSoundTime = 0f;
+    protected static float lastHurtSoundTime = 0f;
     protected override void Awake()
     {
         base.Awake();
@@ -70,11 +77,14 @@ public class Enemy : Character
 
     protected override void Start()
     {
-        if (player == null) player = GameObject.FindGameObjectWithTag("Player")?.transform;
+        base.Start();
 
+        if (player == null) player = GameObject.FindGameObjectWithTag("Player")?.transform;
         if (groundLayer.value == 0) groundLayer = LayerMask.GetMask("Ground", "Default");
 
-        originalScale = transform.localScale;
+        if (visualRoot == null) visualRoot = transform;
+
+        originalScale = visualRoot.localScale;
 
         if (profile != null)
         {
@@ -83,8 +93,6 @@ public class Enemy : Character
             damage = profile.damage;
             agent.speed = profile.patrolSpeed;
         }
-
-        base.Start();
     }
 
     void Update() { if (currentHP > 0 && !isAnimatingAttack) HandleWalkAnimation(); }
@@ -93,10 +101,17 @@ public class Enemy : Character
     {
         base.TakeDamage(damageAmount);
         if (SoundManager.Instance != null && audioSettings.hurtSound != null)
-            SoundManager.Instance.PlayRandomSFX(audioSettings.hurtSound);
+        {
+            if (Time.time - lastHurtSoundTime > 0.05f)
+            {
+                SoundManager.Instance.PlayRandomSFX(audioSettings.hurtSound);
+                lastHurtSoundTime = Time.time;
+            }
+        }
 
         if (animationRoutine != null) StopCoroutine(animationRoutine);
-        transform.localScale = originalScale;
+
+        visualRoot.localScale = originalScale;
         isAnimatingAttack = false;
         StartCoroutine(HurtAnimation());
     }
@@ -104,7 +119,13 @@ public class Enemy : Character
     protected override void Die()
     {
         if (SoundManager.Instance != null && audioSettings.dieSound != null)
-            SoundManager.Instance.PlaySFX(audioSettings.dieSound);
+        {
+            if (Time.time - lastDieSoundTime > 0.1f)
+            {
+                SoundManager.Instance.PlaySFX(audioSettings.dieSound);
+                lastDieSoundTime = Time.time;
+            }
+        }
         base.Die();
         DropLoot();
         Destroy(gameObject);
@@ -120,17 +141,18 @@ public class Enemy : Character
             SoundManager.Instance.PlayRandomSFX(audioSettings.attackSounds);
     }
 
-    protected void HandleWalkAnimation()
+    protected virtual void HandleWalkAnimation()
     {
         if (agent.velocity.magnitude > 0.1f)
         {
             float timer = Time.time * animSettings.walkBobSpeed;
             float bobValue = Mathf.Sin(timer) * animSettings.walkBobAmount;
+
             Vector3 targetScale = new Vector3(originalScale.x * (1 - bobValue), originalScale.y * (1 + bobValue), originalScale.z * (1 - bobValue));
-            transform.localScale = Vector3.Lerp(transform.localScale, targetScale, Time.deltaTime * 10f);
+            visualRoot.localScale = Vector3.Lerp(visualRoot.localScale, targetScale, Time.deltaTime * 10f);
 
             float swayValue = Mathf.Cos(timer) * animSettings.walkSwayAmount;
-            transform.rotation = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y, swayValue);
+            visualRoot.localRotation = Quaternion.Euler(visualRoot.localEulerAngles.x, visualRoot.localEulerAngles.y, swayValue);
 
             if (player != null && Vector3.Distance(transform.position, player.position) < 15f)
             {
@@ -148,8 +170,8 @@ public class Enemy : Character
         else
         {
             stepTimer = 0f;
-            transform.localScale = Vector3.Lerp(transform.localScale, originalScale, Time.deltaTime * 5f);
-            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y, 0), Time.deltaTime * 5f);
+            visualRoot.localScale = Vector3.Lerp(visualRoot.localScale, originalScale, Time.deltaTime * 5f);
+            visualRoot.localRotation = Quaternion.Lerp(visualRoot.localRotation, Quaternion.Euler(visualRoot.localEulerAngles.x, visualRoot.localEulerAngles.y, 0), Time.deltaTime * 5f);
         }
     }
 
@@ -172,13 +194,13 @@ public class Enemy : Character
         isAnimatingAttack = true;
         float timer = 0, speed = 0.1f;
         Vector3 squashScale = new Vector3(originalScale.x * 1.3f, originalScale.y * 0.7f, originalScale.z * 1.3f);
-        while (timer < 1f) { timer += Time.deltaTime / speed; transform.localScale = Vector3.Lerp(originalScale, squashScale, timer); yield return null; }
+        while (timer < 1f) { timer += Time.deltaTime / speed; visualRoot.localScale = Vector3.Lerp(originalScale, squashScale, timer); yield return null; }
         timer = 0;
         Vector3 stretchScale = new Vector3(originalScale.x * 0.7f, originalScale.y * 1.4f, originalScale.z * 0.7f);
-        while (timer < 1f) { timer += Time.deltaTime / speed; transform.localScale = Vector3.Lerp(squashScale, stretchScale, timer); yield return null; }
+        while (timer < 1f) { timer += Time.deltaTime / speed; visualRoot.localScale = Vector3.Lerp(squashScale, stretchScale, timer); yield return null; }
         timer = 0; float recoverySpeed = 0.2f;
-        while (timer < 1f) { timer += Time.deltaTime / recoverySpeed; transform.localScale = Vector3.Lerp(stretchScale, originalScale, Mathf.SmoothStep(0f, 1f, timer)); yield return null; }
-        transform.localScale = originalScale;
+        while (timer < 1f) { timer += Time.deltaTime / recoverySpeed; visualRoot.localScale = Vector3.Lerp(stretchScale, originalScale, Mathf.SmoothStep(0f, 1f, timer)); yield return null; }
+        visualRoot.localScale = originalScale;
         isAnimatingAttack = false;
     }
 
@@ -186,9 +208,9 @@ public class Enemy : Character
     {
         Vector3 hurtScale = new Vector3(originalScale.x * 1.2f, originalScale.y * 0.6f, originalScale.z * 1.2f);
         float timer = 0, speed = 0.1f;
-        while (timer < 1f) { timer += Time.deltaTime / speed; transform.localScale = Vector3.Lerp(originalScale, hurtScale, timer); yield return null; }
+        while (timer < 1f) { timer += Time.deltaTime / speed; visualRoot.localScale = Vector3.Lerp(originalScale, hurtScale, timer); yield return null; }
         timer = 0;
-        while (timer < 1f) { timer += Time.deltaTime / speed; transform.localScale = Vector3.Lerp(hurtScale, originalScale, timer); yield return null; }
-        transform.localScale = originalScale;
+        while (timer < 1f) { timer += Time.deltaTime / speed; visualRoot.localScale = Vector3.Lerp(hurtScale, originalScale, timer); yield return null; }
+        visualRoot.localScale = originalScale;
     }
 }

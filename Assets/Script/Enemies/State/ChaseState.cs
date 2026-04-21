@@ -4,15 +4,26 @@ public class ChaseState : EnemyBaseState
 {
     public override void EnterState(EnemyAI ai)
     {
-        ai.enemy.agent.speed = ai.enemy.profile.chaseSpeed;
-        ai.enemy.agent.isStopped = false;
-        ai.enemy.agent.stoppingDistance = 0f;
+        if (ai.enemy.agent.isActiveAndEnabled && ai.enemy.agent.isOnNavMesh)
+        {
+            ai.enemy.agent.speed = ai.enemy.profile.chaseSpeed;
+            ai.enemy.agent.isStopped = false;
+            ai.enemy.agent.stoppingDistance = 0f;
+        }
     }
 
     public override void UpdateState(EnemyAI ai)
     {
+        if (ai.enemy.isAnimatingAttack) return;
+
         if (ai.enemy.player == null) return;
-        ai.enemy.agent.SetDestination(ai.enemy.player.position);
+
+        // เช็กก่อนสั่งให้เดินไปหาผู้เล่น
+        if (ai.enemy.agent.isActiveAndEnabled && ai.enemy.agent.isOnNavMesh)
+        {
+            ai.enemy.agent.SetDestination(ai.enemy.player.position);
+        }
+
         float distance = Vector3.Distance(ai.transform.position, ai.enemy.player.position);
 
         if (!(ai.enemy is BossEnemy) && distance > ai.enemy.profile.chaseRange)

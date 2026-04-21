@@ -6,13 +6,19 @@ public class AttackState : EnemyBaseState
 
     public override void EnterState(EnemyAI ai)
     {
-        ai.enemy.agent.isStopped = true;
-        ai.enemy.agent.velocity = Vector3.zero;
+        if (ai.enemy.agent.isActiveAndEnabled && ai.enemy.agent.isOnNavMesh)
+        {
+            ai.enemy.agent.isStopped = true;
+            ai.enemy.agent.velocity = Vector3.zero;
+        }
+
         attackTimer = 0f;
     }
 
     public override void UpdateState(EnemyAI ai)
     {
+        if (ai.enemy.isAnimatingAttack) return;
+
         if (ai.enemy.player == null) return;
 
         Vector3 targetPosition = new Vector3(
@@ -39,7 +45,10 @@ public class AttackState : EnemyBaseState
 
     public override void ExitState(EnemyAI ai)
     {
-        ai.enemy.agent.isStopped = false;
+        if (ai.enemy.agent.isActiveAndEnabled && ai.enemy.agent.isOnNavMesh)
+        {
+            ai.enemy.agent.isStopped = false;
+        }
     }
 
     void PerformAttack(EnemyAI ai)
